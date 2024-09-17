@@ -12,12 +12,8 @@ public:
 	Entity* m_defaultEntity;
 	std::vector<Entity*> m_entities;
 
-	int m_weightDungeon;
+	int m_widthDungeon;
 	int m_heightDungeon;
-
-	char m_cornerWall;
-	char m_horizontalWall;
-	char m_verticalWall;
 
 #pragma endregion
 
@@ -28,7 +24,7 @@ public:
 #pragma region Class function
 
 	Dungeon();
-	Dungeon(int weight, int height, char cornerWall = '*', char horizontalWall = '-', char verticalWall = '|');
+	Dungeon(int width, int height);
 
 	void Clear();
 	void AddEntity(Entity* entity);
@@ -36,6 +32,9 @@ public:
 
 	bool DrawLimitBounds(bool xlimit, bool ylimit);
 	void Draw();
+
+	//void ResizeConsole();
+	//void AfficherDimensionsConsole();
 
 #pragma endregion
 
