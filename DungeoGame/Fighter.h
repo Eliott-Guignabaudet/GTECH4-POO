@@ -46,7 +46,7 @@ public:
 	//std::vector<Entity*> NearFighter();
 	void Attack(Fighter* target);
 	void TakeDamage(int damage);
-	void Die();
+	virtual void Die();
 
 #pragma endregion
 };
