@@ -54,7 +54,7 @@ void App::Run()
 
 void App::Init()
 {
-	m_dungeon = new Dungeon();
+	m_dungeon = new Dungeon(100, 25);
 	m_gameStateMachine = new StateMachine();
 	PlayerController* playerController = new PlayerController();
 	Hero* hero = new Hero();
@@ -100,6 +100,7 @@ void App::Draw()
 	//		 Draw Title
 	//		 Draw CurrentTurn
 	//		 Draw Dungeon
+	m_dungeon->Draw();
 	//		 Draw Player Actions
 	//		 Draw Last events
 
