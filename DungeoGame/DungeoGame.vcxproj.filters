@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fichiers sources">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Fichiers de ressources">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Gameplay">
+      <UniqueIdentifier>{8996ac2f-86f3-4877-8174-fedf38cadd94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\App">
+      <UniqueIdentifier>{422965ff-5fbb-41a0-8ed4-cacaf4705e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Gameplay\IA">
+      <UniqueIdentifier>{280b4521-c6a9-4496-99a2-f4d029974c71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Gameplay\IA\StateMachine">
+      <UniqueIdentifier>{e2403739-0fbf-41b5-b9c0-447dc66d2dcb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Gameplay\Player">
+      <UniqueIdentifier>{f6f7d22c-df22-4af3-bfe3-170dc3a6fb04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\App\StateMachine">
+      <UniqueIdentifier>{1bd1c1cd-2fc2-4968-9bdc-20a44f571676}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\StateMachine">
+      <UniqueIdentifier>{087656ff-1b32-493b-9ae7-2e047920cb17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Gameplay">
+      <UniqueIdentifier>{fe6b7d9f-0482-4b75-bb6a-47d88684f65c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\App">
+      <UniqueIdentifier>{a2c16e72-ecca-4574-866d-6ab14df3ceed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\StateMachine">
+      <UniqueIdentifier>{370510f2-a7b1-4f41-9595-09028707c2a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\App\StateMachine">
+      <UniqueIdentifier>{aa50fb8f-5964-4a8a-9df1-ef3e438621bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Gameplay\IA">
+      <UniqueIdentifier>{abf4e413-b801-4129-af21-788a445b5db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Gameplay\Player">
+      <UniqueIdentifier>{ad739a31-2bce-4abd-9d85-2af00bd0557e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\Gameplay\IA\StateMachine">
+      <UniqueIdentifier>{0dc7caf4-ae82-4181-89a3-e17ff3676f04}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DungeoGame.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Fichiers sources\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp">
+      <Filter>Fichiers sources\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="App.cpp">
+      <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Message.cpp">
+      <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
+      <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
+    <ClCompile Include="IAController.cpp">
+      <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Dungeon.cpp">
+      <Filter>Fichiers sources\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Fichiers sources\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Fighter.cpp">
+      <Filter>Fichiers sources\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="IATurnState.cpp">
+      <Filter>Fichiers sources\App\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="InitState.cpp">
+      <Filter>Fichiers sources\App\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverState.cpp">
+      <Filter>Fichiers sources\App\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTurnState.cpp">
+      <Filter>Fichiers sources\App\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Spectre.cpp">
+      <Filter>Fichiers sources\Gameplay\IA</Filter>
+    </ClCompile>
+    <ClCompile Include="Mower.cpp">
+      <Filter>Fichiers sources\Gameplay\IA</Filter>
+    </ClCompile>
+    <ClCompile Include="Mob.cpp">
+      <Filter>Fichiers sources\Gameplay\IA</Filter>
+    </ClCompile>
+    <ClCompile Include="Golem.cpp">
+      <Filter>Fichiers sources\Gameplay\IA</Filter>
+    </ClCompile>
+    <ClCompile Include="IAAttackState.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="IACapacityState.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="IADieState.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="IAMoveState.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Hero.cpp">
+      <Filter>Fichiers sources\Gameplay\Player</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Dungeon.h">
+      <Filter>Fichiers d%27en-tête\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Fichiers d%27en-tête\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Fighter.h">
+      <Filter>Fichiers d%27en-tête\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h">
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Message.h">
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClInclude>
+    <ClInclude Include="IAController.h">
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Golem.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA</Filter>
+    </ClInclude>
+    <ClInclude Include="Mob.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA</Filter>
+    </ClInclude>
+    <ClInclude Include="Mower.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA</Filter>
+    </ClInclude>
+    <ClInclude Include="Spectre.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA</Filter>
+    </ClInclude>
+    <ClInclude Include="IAMoveState.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IADieState.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IACapacityState.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IAAttackState.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Hero.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTurnState.h">
+      <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="IATurnState.h">
+      <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverState.h">
+      <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="InitState.h">
+      <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Fichiers d%27en-tête\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Fichiers d%27en-tête\StateMachine</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
