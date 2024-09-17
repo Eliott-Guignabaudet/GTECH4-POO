@@ -2,10 +2,14 @@
 
 #include "App.h"
 #include "Time.h"
+#include "Dungeon.h"
+#include "StateMachine.h"
 
 App* App::s_instance = nullptr;
 
-App::App() 
+App::App() :
+	m_gameStateMachine(nullptr),
+	m_dungeon(nullptr)
 {
 
 }
@@ -34,6 +38,12 @@ void App::Run()
 	
 }
 
+
+void App::Init()
+{
+	m_dungeon = new Dungeon();
+	m_gameStateMachine = new StateMachine();
+}
 
 void App::Update()
 {
