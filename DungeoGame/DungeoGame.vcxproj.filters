@@ -135,7 +135,12 @@
     <ClCompile Include="Hero.cpp">
       <Filter>Fichiers sources\Gameplay\Player</Filter>
     </ClCompile>
-    
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Fichiers sources\Maths</Filter>
+    </ClCompile>
+	<ClCompile Include="Time.cpp">
+      <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -210,6 +215,11 @@
     <ClInclude Include="State.h">
       <Filter>Fichiers d%27en-tête\StateMachine</Filter>
     </ClInclude>
-
+	<ClCompile Include="Vector2.cpp">
+      <Filter>Fichiers d%27en-tête\Maths</Filter>
+    </ClCompile>
+		<ClCompile Include="Time.cpp">
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
