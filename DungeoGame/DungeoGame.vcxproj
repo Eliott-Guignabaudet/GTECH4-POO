@@ -145,6 +145,7 @@
     <ClCompile Include="IAMoveState.cpp" />
     <ClCompile Include="IATurnState.cpp" />
     <ClCompile Include="InitState.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Message.cpp" />
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="Mower.cpp" />
@@ -172,6 +173,7 @@
     <ClInclude Include="IAMoveState.h" />
     <ClInclude Include="IATurnState.h" />
     <ClInclude Include="InitState.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Mob.h" />
     <ClInclude Include="Mower.h" />
