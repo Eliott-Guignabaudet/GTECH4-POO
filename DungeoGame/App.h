@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+
 class Dungeon;
 class StateMachine;
 
@@ -12,6 +13,7 @@ public:
 
 	static App* GetInstance();
 	void Run();
+	void Draw();
 
 
 private:
@@ -21,6 +23,6 @@ private:
 	StateMachine* m_gameStateMachine;
 
 	void Init();
+	void InitStateMachine();
 	void Update();
-	void Draw();
 };
