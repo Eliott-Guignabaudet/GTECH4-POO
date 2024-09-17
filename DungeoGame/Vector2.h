@@ -25,8 +25,18 @@ namespace Maths
 #pragma endregion
 
 		bool operator==(const Vector2& other);
+		//void operator+=(const Vector2& other);
 
 	};
+
+	//void Vector2::operator+=(const Vector2& other) 
+	//{
+	//	m_x += other.m_x;
+	//	m_y += other.m_y;
+	//}
+
+
+
 }
 
 

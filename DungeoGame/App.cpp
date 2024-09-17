@@ -20,7 +20,8 @@ App* App::s_instance = nullptr;
 
 App::App() :
 	m_gameStateMachine(nullptr),
-	m_dungeon(nullptr)
+	m_dungeon(nullptr),
+	m_playerController(nullptr)
 {
 
 }
@@ -56,9 +57,9 @@ void App::Init()
 {
 	m_dungeon = new Dungeon(100, 25);
 	m_gameStateMachine = new StateMachine();
-	PlayerController* playerController = new PlayerController();
-	Hero* hero = new Hero();
-	playerController->PossessFighter(hero);
+	m_playerController = new PlayerController();
+	m_playerController->PossessFighter(m_dungeon->m_heroEntity);
+
 	InitStateMachine();
 
 }
@@ -86,6 +87,7 @@ void App::Update()
 {
 	// TODO: Update
 	// 
+	m_playerController->Update();
 	if (Input::IsKeyPush('A'))
 	{
 		Draw();

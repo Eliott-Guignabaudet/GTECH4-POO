@@ -42,3 +42,5 @@ bool Maths::Vector2::operator==(const Vector2& other)
     return m_x == other.m_x && m_y == other.m_y;
 }
 
+
+

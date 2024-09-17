@@ -3,6 +3,7 @@
 
 class Dungeon;
 class StateMachine;
+class PlayerController;
 
 class App
 {
@@ -21,6 +22,7 @@ private:
 	static App* s_instance;
 	Dungeon* m_dungeon;
 	StateMachine* m_gameStateMachine;
+	PlayerController* m_playerController;
 
 	void Init();
 	void InitStateMachine();
