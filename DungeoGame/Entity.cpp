@@ -3,12 +3,12 @@
 
 #pragma region Getteur / Setteur
 
-void Entity::SetPosition(Maths::Vector2 pos)
+void Entity::SetPosition(Maths::Vector2* pos)
 {
 	m_pos = pos;
 }
 
-Maths::Vector2 Entity::GetPosition()
+Maths::Vector2* Entity::GetPosition()
 {
 	return m_pos;
 }
@@ -28,13 +28,13 @@ char Entity::GetSprite()
 #pragma region Class function
 
 Entity::Entity() :
-	m_pos(0, 0),
+	m_pos(nullptr),
 	m_sprite(' ')
 {
 
 }
 
-Entity::Entity(Maths::Vector2 pos, char sprite) :
+Entity::Entity(Maths::Vector2* pos, char sprite) :
 	m_pos(pos),
 	m_sprite(sprite)
 {

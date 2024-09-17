@@ -42,22 +42,3 @@ bool Maths::Vector2::operator==(const Vector2& other)
     return m_x == other.m_x && m_y == other.m_y;
 }
 
-void Maths::Vector2::SetX(int x)
-{
-    m_x = x;
-}
-
-int Maths::Vector2::GetX()
-{ 
-    return m_x; 
-}
-
-void Maths::Vector2::SetY(int y)
-{
-    m_y = y;
-}
-
-int Maths::Vector2::GetY() 
-{ 
-    return m_y; 
-}

@@ -7,21 +7,21 @@ public:
 
 #pragma region Variables
 
-    Fighter m_targetPlayer;
+    Entity* m_targetPlayer;
     int m_cooldown;
 
 #pragma endregion
 
 #pragma region Getteur / Setteur
 
-	void SetHeroTarget(Fighter target);
+	void SetHeroTarget(Entity* target);
 
 #pragma endregion
 
 #pragma region Class function
 
     Mob();
-    Mob(Maths::Vector2 pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown);
+    Mob(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Entity* target = nullptr);
 
     virtual void ExecuteCapacity();
 

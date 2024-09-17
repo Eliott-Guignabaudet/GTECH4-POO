@@ -41,7 +41,7 @@ public:
 #pragma region Class function
 
 	Fighter();
-	Fighter(Maths::Vector2& pos, char sprite, int maxLife, int attackDamage, int sizeCanMove);
+	Fighter(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove);
 
 	//std::vector<Entity*> NearFighter();
 	void Attack(Fighter* target);

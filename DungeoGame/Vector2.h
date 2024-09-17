@@ -14,15 +14,6 @@ namespace Maths
 
 #pragma endregion
 
-#pragma region Getteur / Setteur
-
-		void SetX(int x);
-		int GetX();
-		void SetY(int y);
-		int GetY();
-
-#pragma endregion
-
 #pragma region Class function
 
 		Vector2();

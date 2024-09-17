@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
-#include "Entity.h"
+#include "Vector2.h"
+
+class Entity;
+class Mob;
 
 class Dungeon
 {
@@ -9,6 +12,7 @@ public:
 
 #pragma region Variables
 
+	Entity* m_heroEntity;
 	Entity* m_defaultEntity;
 	std::vector<Entity*> m_entities;
 
@@ -29,6 +33,10 @@ public:
 	void Clear();
 	void AddEntity(Entity* entity);
 	void RemoveEntity(Entity* entity);
+
+	void SpawnPlayer(int x, int y);
+	void SpawnMob(int nbMob = 10);
+	Mob* GetRandomMob(Maths::Vector2* randomPos);
 
 	bool DrawLimitBounds(bool xlimit, bool ylimit);
 	void Draw();

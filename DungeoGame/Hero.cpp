@@ -1,11 +1,13 @@
 #include "Hero.h"
 
-Hero::Hero()
+Hero::Hero() :
+	Fighter::Fighter()
 {
-	Fighter::Fighter();
+
 }
 
-Hero::Hero(int maxLife, int attackDamage, int sizeCanMove, Maths::Vector2 pos)
+Hero::Hero(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove) :
+	Fighter::Fighter(pos, '@', maxLife, attackDamage, sizeCanMove)
 {
-	Fighter::Fighter(pos, '@', maxLife, attackDamage, sizeCanMove);
+
 }

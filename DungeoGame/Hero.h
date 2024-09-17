@@ -9,7 +9,7 @@ public:
 #pragma region Class function
 
 	Hero();
-	Hero(int maxLife, int attackDamage, int sizeCanMove, Maths::Vector2 pos);
+	Hero(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove);
 
 #pragma endregion
 };

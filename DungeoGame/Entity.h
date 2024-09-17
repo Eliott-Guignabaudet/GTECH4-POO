@@ -7,7 +7,7 @@ public:
 
 #pragma region Variables
 
-	Maths::Vector2 m_pos;
+	Maths::Vector2* m_pos;
 
 	char m_sprite;
 
@@ -15,8 +15,8 @@ public:
 
 #pragma region Getteur / Setteur
 
-	void SetPosition(Maths::Vector2 sprite);
-	Maths::Vector2 GetPosition();
+	void SetPosition(Maths::Vector2* pos);
+	Maths::Vector2* GetPosition();
 
 	void SetSprite(char sprite);
 	char GetSprite();
@@ -26,7 +26,7 @@ public:
 #pragma region Class function
 
 	Entity();
-	Entity(Maths::Vector2 pos, char sprite);
+	Entity(Maths::Vector2* pos, char sprite = ' ');
 
 	void Draw();
 

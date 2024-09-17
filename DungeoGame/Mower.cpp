@@ -5,10 +5,10 @@ Mower::Mower()
 	Mob::Mob();
 }
 
-Mower::Mower(Maths::Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown)
+Mower::Mower(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown) :
+	Mob::Mob(pos, 'F', maxLife, attackDamage, sizeCanMove, cooldown)
 {
 	//Attaque : Très puissante
-	Mob::Mob(pos, 'F', maxLife, attackDamage, sizeCanMove, cooldown);
 }
 
 void Mower::ExecuteCapacity()

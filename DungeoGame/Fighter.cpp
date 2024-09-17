@@ -47,7 +47,7 @@ int Fighter::GetSizeMove()
 #pragma region Class function
 
 Fighter::Fighter() :
-	Entity(),
+	Entity::Entity(),
 	m_dir(0, 0),
 	m_maxLife(0),
 	m_life(0),
@@ -57,8 +57,8 @@ Fighter::Fighter() :
 
 }
 
-Fighter::Fighter(Maths::Vector2& pos, char sprite, int maxLife, int attackDamage, int sizeCanMove) :
-	Entity(pos, sprite),
+Fighter::Fighter(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove) :
+	Entity::Entity(pos, sprite),
 	m_dir(0, 0),
 	m_maxLife(maxLife),
 	m_life(maxLife),

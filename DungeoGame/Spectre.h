@@ -9,7 +9,7 @@ public:
 #pragma region Class function
 
     Spectre();
-    Spectre(Maths::Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown);
+    Spectre(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown);
 
     virtual void ExecuteCapacity() override;
 

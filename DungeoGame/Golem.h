@@ -10,7 +10,7 @@ public:
 #pragma region Class function
 
     Golem();
-    Golem(Maths::Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown);
+    Golem(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown);
 
     virtual void ExecuteCapacity() override;
 
