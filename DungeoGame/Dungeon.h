@@ -3,6 +3,7 @@
 #include "Vector2.h"
 
 class Entity;
+class Hero;
 class Mob;
 
 class Dungeon
@@ -12,7 +13,7 @@ public:
 
 #pragma region Variables
 
-	Entity* m_heroEntity;
+	Hero* m_heroEntity;
 	Entity* m_defaultEntity;
 	std::vector<Entity*> m_entities;
 

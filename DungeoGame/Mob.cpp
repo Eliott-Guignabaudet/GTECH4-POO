@@ -1,7 +1,7 @@
 #include "Mob.h"
 
 Mob::Mob() :
-	Fighter(),
+	Fighter::Fighter(),
 	m_targetPlayer(nullptr),
 	m_cooldown(0)
 {
@@ -9,7 +9,7 @@ Mob::Mob() :
 }
 
 Mob::Mob(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Entity* target) :
-	Fighter(pos, sprite, maxLife, attackDamage, sizeCanMove),
+	Fighter::Fighter(pos, sprite, maxLife, attackDamage, sizeCanMove),
 	m_targetPlayer(target),
 	m_cooldown(cooldown)
 {
