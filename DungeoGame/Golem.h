@@ -10,8 +10,10 @@ public:
 #pragma region Class function
 
     Golem();
-    Golem(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown);
+    Golem(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero);
 
+    void Move() override;
+    virtual Maths::Vector2 GetNewPosition() override;
     virtual void ExecuteCapacity() override;
 
 #pragma endregion

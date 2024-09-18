@@ -1,4 +1,5 @@
 #include "Mob.h"
+#include "Hero.h"
 
 Mob::Mob() :
 	Fighter::Fighter(),
@@ -8,7 +9,7 @@ Mob::Mob() :
 
 }
 
-Mob::Mob(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Entity* target) :
+Mob::Mob(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* target) :
 	Fighter::Fighter(pos, sprite, maxLife, attackDamage, sizeCanMove),
 	m_targetPlayer(target),
 	m_cooldown(cooldown)
@@ -16,12 +17,12 @@ Mob::Mob(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int si
 
 }
 
-void Mob::SetHeroTarget(Entity* target)
+void Mob::SetHeroTarget(Hero* target)
 {
 	m_targetPlayer = target;
 }
 
-void Mob::ExecuteCapacity()
+Hero* Mob::GetHeroTarget()
 {
-
+	return m_targetPlayer;
 }

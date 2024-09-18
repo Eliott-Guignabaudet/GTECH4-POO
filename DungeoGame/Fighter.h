@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include <functional>
 #include <vector>
 
 class Fighter :
@@ -20,8 +21,10 @@ private:
 
 	int m_sizeCanMove;
 
+public :
+	static std::function<void(Fighter*)> OnFighterMoved;
+
 #pragma endregion
-public:
 
 #pragma region Getteur / Setteur
 
@@ -48,8 +51,11 @@ public:
 
 	void SetMovePosPossibility(int xLimit, int Ylimit);
 	std::vector<Maths::Vector2> GetMovePosPossibility();
+
+	virtual void Move();
+	void OnMove();
 	void Attack(Fighter* target);
-	void TakeDamage(int damage);
+	virtual void TakeDamage(int damage, Fighter* target = nullptr);
 	virtual void Die();
 
 	void UpdateMovePossibility(int width, int height);

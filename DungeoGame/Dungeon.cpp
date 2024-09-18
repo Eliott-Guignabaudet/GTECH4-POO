@@ -50,13 +50,13 @@ void Dungeon::Clear()
     m_fighters.clear();
 }
 
-void Dungeon::AddEntity(Fighter* fighter)
+void Dungeon::AddFighter(Fighter* fighter)
 {
     m_fighters.push_back(fighter);
     fighter->UpdateMovePossibility(m_widthDungeon, m_heightDungeon);
 }
 
-void Dungeon::RemoveEntity(Fighter* entity)
+void Dungeon::RemoveFighter(Fighter* entity)
 {
     for (auto it = m_fighters.begin(); it != m_fighters.end();)
     {
@@ -77,7 +77,7 @@ void Dungeon::SpawnPlayer(int x, int y)
     Maths::Vector2* posPlayer = new Maths::Vector2(x, y);
     Hero* player = new Hero(posPlayer, 10, 10, 3);
     m_heroEntity = player;
-    AddEntity(player);
+    AddFighter(player);
 }
 
 void Dungeon::SpawnMob(int nbMob)
@@ -105,8 +105,7 @@ void Dungeon::SpawnMob(int nbMob)
         Mob* mob = GetRandomMob(pos);
         if (mob != nullptr) 
         {
-            mob->SetHeroTarget(m_heroEntity);
-            AddEntity(mob);
+            AddFighter(mob);
         }
     }
 }
@@ -118,17 +117,17 @@ Mob* Dungeon::GetRandomMob(Maths::Vector2* randomPos)
     switch (id) {
 
     case (int)EnumMob::Golem: {
-        Golem* golem = new Golem(randomPos, 10, 3, 1, 3);
+        Golem* golem = new Golem(randomPos, 10, 3, 1, 3, m_heroEntity);
         return golem;
     }
 
     case (int)EnumMob::Spectre: {
-        Spectre* spectre = new Spectre(randomPos, 10, 3, 1, 3);
+        Spectre* spectre = new Spectre(randomPos, 10, 3, 1, 3, m_heroEntity);
         return spectre;
     }
 
     case (int)EnumMob::Mower: {
-        Mower* mower = new Mower(randomPos, 10, 3, 1, 3);
+        Mower* mower = new Mower(randomPos, 10, 3, 1, 3, m_heroEntity);
         return mower;
     }
 
@@ -250,10 +249,8 @@ void Dungeon::DrawTabChar(std::vector<std::vector<char>>* tabChar)
 
 void Dungeon::DrawStatistics()
 {
-    std::cout << "\n\n";
-
     DrawLineWithAnything(m_widthDungeon, '-');
-    DrawLineWithNothing(m_widthDungeon, '*');
+    //DrawLineWithNothing(m_widthDungeon, '*');
 
     DrawLineTitle(m_widthDungeon, '*', "Player Statistics :");
 
@@ -262,7 +259,7 @@ void Dungeon::DrawStatistics()
     DrawLineElement(m_widthDungeon, '*', "Life :", std::to_string(m_heroEntity->GetLife()));
     DrawLineElement(m_widthDungeon, '*', "Attack :", std::to_string(m_heroEntity->GetAttackDamage()));
 
-    DrawLineWithNothing(m_widthDungeon, '*');
+    //DrawLineWithNothing(m_widthDungeon, '*');
     DrawLineWithAnything(m_widthDungeon, '-');
 }
 

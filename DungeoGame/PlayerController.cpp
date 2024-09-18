@@ -76,11 +76,10 @@ void PlayerController::MovePlayer(Vector2 direction)
 	// TODO : Change Move
 
 	m_possessedFighter->SetDirection(direction);
-	Vector2* pos = m_possessedFighter->GetPosition();
-	pos->m_x += direction.m_x;
-	pos->m_y += direction.m_y;
+
 	if (direction.m_x != 0 || direction.m_y != 0)
 	{
-		App::GetInstance()->Draw();
+		m_possessedFighter->Move();
+		//App::GetInstance()->Draw();
 	}
 }

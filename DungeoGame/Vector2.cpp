@@ -15,19 +15,26 @@ Maths::Vector2::Vector2(int x, int y) :
 
 }
 
-int Maths::Vector2::GetSquareDistance(Vector2 vecOrigin, Vector2 vecTarget)
+int Maths::Vector2::GetDistance(Vector2 vecOrigin, Vector2 vecTarget)
 {
-    int xSquare = (vecTarget.m_x - vecOrigin.m_x) * (vecTarget.m_x - vecOrigin.m_x);
-    int ySquare = (vecTarget.m_y - vecOrigin.m_y) * (vecTarget.m_y - vecOrigin.m_y);
+    int xSquare = (vecTarget.m_x - vecOrigin.m_x);
+    int ySquare = (vecTarget.m_y - vecOrigin.m_y);
 
-    int distSquare = xSquare + ySquare;
-    return distSquare;
+    return xSquare + ySquare;
+}
+
+Maths::Vector2 Maths::Vector2::GetVectorDirection(Vector2 vecOrigin, Vector2 vecTarget)
+{
+    int xSquare = (vecTarget.m_x - vecOrigin.m_x);
+    int ySquare = (vecTarget.m_y - vecOrigin.m_y);
+
+    return Maths::Vector2(xSquare, ySquare);
 }
 
 void Maths::Vector2::Normalize()
 {
     // Compute the magnitude of the vector
-    float magnitude = std::sqrt(m_x * m_x + m_y * m_y);
+    int magnitude = std::sqrt(m_x * m_x + m_y * m_y);
 
     // Check for zero magnitude to avoid division by zero
     if (magnitude != 0)
@@ -40,6 +47,12 @@ void Maths::Vector2::Normalize()
 bool Maths::Vector2::operator==(const Vector2& other)
 {
     return m_x == other.m_x && m_y == other.m_y;
+}
+
+bool Maths::Vector2::operator!=(const Vector2& other)
+{
+    return !(*this == other);
+    //return m_x != other.m_x || m_y != other.m_y;
 }
 
 

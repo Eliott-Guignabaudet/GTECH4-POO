@@ -19,12 +19,14 @@ namespace Maths
 		Vector2();
 		Vector2(int x, int y);
 
-		int GetSquareDistance(Vector2 vecOrigin, Vector2 vecTarget);
+		static int GetDistance(Vector2 vecOrigin, Vector2 vecTarget);
+		static Vector2 GetVectorDirection(Vector2 vecOrigin, Vector2 vecTarget);
 		void Normalize();
 
 #pragma endregion
 
 		bool operator==(const Vector2& other);
+		bool operator!=(const Vector2& other);
 		//void operator+=(const Vector2& other);
 
 	};

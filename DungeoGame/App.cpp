@@ -5,6 +5,7 @@
 #include "Dungeon.h"
 #include "Input.h"
 #include "PlayerController.h"
+#include "Fighter.h"
 #include "Hero.h"
 
 #pragma region StateMachine Includes
@@ -17,7 +18,7 @@
 
 #pragma region Singleton
 
-
+using namespace std::placeholders;
 
 App* App::s_instance = nullptr;
 
@@ -61,7 +62,7 @@ void App::Run()
 
 void App::Init()
 {
-	m_dungeon = new Dungeon(100, 25);
+	m_dungeon = new Dungeon(119, 20);
 	m_gameStateMachine = new StateMachine();
 	m_playerController = new PlayerController();
 	m_playerController->PossessFighter(m_dungeon->m_heroEntity);
@@ -103,6 +104,9 @@ void App::RegisterForEvents()
 		m_gameStateMachine->GetState<IATurnState>();
 	iaTurnState->OnFinishIATurn = onIaTurnFinishBind;
 
+	auto onFighterMovedBind =
+		std::bind(&App::HandleOnFighterMoved, this, _1);
+	Fighter::OnFighterMoved = onFighterMovedBind;
 }
 
 void App::Update()
@@ -154,6 +158,11 @@ void App::HandleOnFinishIATurn()
 	State* playerTurnState =
 		m_gameStateMachine->GetState<PlayerTurnState>();
 	m_gameStateMachine->SwitchToState(playerTurnState);
+	Draw();
+}
+
+void App::HandleOnFighterMoved(Fighter* fighter)
+{
 	Draw();
 }
 

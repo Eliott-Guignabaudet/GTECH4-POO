@@ -32,8 +32,8 @@ public:
 	Dungeon(int width, int height);
 
 	void Clear();
-	void AddEntity(Fighter* entity);
-	void RemoveEntity(Fighter* entity);
+	void AddFighter(Fighter* entity);
+	void RemoveFighter(Fighter* entity);
 
 	void SpawnPlayer(int x, int y);
 	void SpawnMob(int nbMob = 10);
