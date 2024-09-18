@@ -143,8 +143,10 @@
     <ClCompile Include="IACapacityState.cpp" />
     <ClCompile Include="IAController.cpp" />
     <ClCompile Include="IADieState.cpp" />
+    <ClCompile Include="IAGolemBrain.cpp" />
     <ClCompile Include="IAMoveState.cpp" />
     <ClCompile Include="IAMowerBrain.cpp" />
+    <ClCompile Include="IASpectreBrain.cpp" />
     <ClCompile Include="IATurnState.cpp" />
     <ClCompile Include="InitState.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -173,8 +175,10 @@
     <ClInclude Include="IACapacityState.h" />
     <ClInclude Include="IAController.h" />
     <ClInclude Include="IADieState.h" />
+    <ClInclude Include="IAGolemBrain.h" />
     <ClInclude Include="IAMoveState.h" />
     <ClInclude Include="IAMowerBrain.h" />
+    <ClInclude Include="IASpectreBrain.h" />
     <ClInclude Include="IATurnState.h" />
     <ClInclude Include="InitState.h" />
     <ClInclude Include="Input.h" />

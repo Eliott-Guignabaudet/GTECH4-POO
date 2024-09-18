@@ -151,9 +151,32 @@ void Fighter::Die()
 
 }
 
-void Fighter::UpdateMovePossibility(int width, int height)
+void Fighter::UpdateMovePossibility(int width, int height, std::vector<Fighter*>* tabFighters)
 {
 	SetMovePosPossibility(width, height);
+
+	for (int i = 0; i < m_listPosPossible.size();)
+	{
+		bool positionOccupied = false;
+
+		for (Entity* fighter : *tabFighters)
+		{
+			if (*fighter->GetPosition() == m_listPosPossible[i] && *GetPosition() != m_listPosPossible[i])
+			{
+				positionOccupied = true;
+				break;
+			}
+		}
+
+		if (positionOccupied)
+		{
+			m_listPosPossible.erase(m_listPosPossible.begin() + i);
+		}
+		else
+		{
+			++i;
+		}
+	}
 }
 
 #pragma endregion

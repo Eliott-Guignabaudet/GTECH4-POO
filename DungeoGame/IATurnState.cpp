@@ -3,7 +3,7 @@
 #include "IAController.h"
 #include "Time.h"
 
-const float TIME_BETWEEN_IA_EXECUTION = 1.f;
+const float TIME_BETWEEN_IA_EXECUTION = 0.2f;
 
 void IATurnState::OnEnter()
 {
@@ -11,7 +11,7 @@ void IATurnState::OnEnter()
 	SetActiveIas(true);
 	m_isTurnFinish = false;
 	m_elapsedTimeBeforeLastExecution = 0.f;
-	m_currentIAIndex;
+	m_currentIAIndex = 0;
 }
 
 void IATurnState::Execute()

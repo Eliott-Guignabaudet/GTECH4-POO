@@ -13,17 +13,6 @@ Mower::Mower(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove
 	//Attaque : Très puissante
 }
 
-void Mower::Move()
-{
-	Maths::Vector2* pos = GetPosition();
-	Maths::Vector2 newPos = GetNewPosition();
-
-	if (*pos != newPos)
-	{
-		*pos = newPos;
-		OnMove();
-	}
-}
 
 
 Maths::Vector2 Mower::GetNewPosition()
@@ -47,5 +36,5 @@ Maths::Vector2 Mower::GetNewPosition()
 void Mower::ExecuteCapacity()
 {
 	//Capacité spéciale : Se déplace vers le héros, cherchant à se rapprocher pour l'attaquer
-
+	Move();
 }

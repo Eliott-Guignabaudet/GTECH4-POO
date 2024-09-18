@@ -35,9 +35,6 @@ Dungeon::Dungeon(int width, int height) :
     m_fighters = std::vector<Fighter*>();
 
     std::srand(time(NULL));
-
-    SpawnPlayer(m_widthDungeon / 2, m_heightDungeon / 2);
-    SpawnMob();
 }
 
 void Dungeon::Clear()
@@ -53,7 +50,6 @@ void Dungeon::Clear()
 void Dungeon::AddFighter(Fighter* fighter)
 {
     m_fighters.push_back(fighter);
-    fighter->UpdateMovePossibility(m_widthDungeon, m_heightDungeon);
 }
 
 void Dungeon::RemoveFighter(Fighter* entity)
@@ -107,6 +103,11 @@ void Dungeon::SpawnMob(int nbMob)
         {
             AddFighter(mob);
         }
+    }
+
+    for (Fighter* fighter : m_fighters)
+    {
+        fighter->UpdateMovePossibility(m_widthDungeon, m_heightDungeon, &m_fighters);
     }
 }
 
@@ -203,7 +204,10 @@ void Dungeon::ReplaceEntity(std::vector<std::vector<char>>* tabChar)
                 (*tabChar)[posPossible.m_y][posPossible.m_x] = 'a';
             }
         }
+    }
 
+    for (Fighter* fighter : m_fighters)
+    {
         Maths::Vector2 vect = *fighter->GetPosition();
         (*tabChar)[vect.m_y][vect.m_x] = fighter->GetSprite();
     }

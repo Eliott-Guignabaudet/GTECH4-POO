@@ -20,7 +20,7 @@ int Maths::Vector2::GetDistance(Vector2 vecOrigin, Vector2 vecTarget)
     int xSquare = (vecTarget.m_x - vecOrigin.m_x);
     int ySquare = (vecTarget.m_y - vecOrigin.m_y);
 
-    return xSquare + ySquare;
+    return abs(xSquare + ySquare);
 }
 
 Maths::Vector2 Maths::Vector2::GetVectorDirection(Vector2 vecOrigin, Vector2 vecTarget)

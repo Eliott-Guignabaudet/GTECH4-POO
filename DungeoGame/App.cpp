@@ -5,8 +5,17 @@
 #include "Dungeon.h"
 #include "Input.h"
 #include "PlayerController.h"
+#include "IAController.h"
 #include "Fighter.h"
 #include "Hero.h"
+
+#include "Mower.h"
+#include "Golem.h"
+#include "Spectre.h"
+
+#include "IAMowerBrain.h"
+#include "IASpectreBrain.h"
+#include "IAGolemBrain.h"
 
 #pragma region StateMachine Includes
 #include "StateMachine.h"
@@ -62,11 +71,14 @@ void App::Run()
 
 void App::Init()
 {
-	m_dungeon = new Dungeon(119, 20);
-	m_gameStateMachine = new StateMachine();
-	m_playerController = new PlayerController();
-	m_playerController->PossessFighter(m_dungeon->m_heroEntity);
+	int width = 119;
+	int height = 20;
+	m_dungeon = new Dungeon(width, height);
 
+
+	m_gameStateMachine = new StateMachine();
+	InitDungeon(width, height);
+	InitControllers();
 	InitStateMachine();
 
 }
@@ -92,6 +104,43 @@ void App::InitStateMachine()
 	m_gameStateMachine->SwitchToState(playerTurnState);
 }
 
+void App::InitDungeon(int width, int height)
+{
+	m_dungeon->SpawnPlayer(width / 2, height / 2);
+	m_dungeon->SpawnMob();
+}
+
+void App::InitControllers()
+{
+	m_playerController = new PlayerController();
+	m_playerController->PossessFighter(m_dungeon->m_heroEntity);
+
+	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
+	for (int i = 0; i < fighters.size(); i++)
+	{
+		Fighter* currentFighter = fighters[i];
+		if (dynamic_cast<Hero*>(fighters[i]))
+		{
+			continue;
+		}
+		if (IAController* newIAController = 
+			TryCreateIAController<Mower, IAMowerBrain>(currentFighter))
+		{
+			m_iasControllers.push_back(newIAController);
+		}
+		else if (IAController* newIAController =
+			TryCreateIAController<Golem, IAGolemBrain>(currentFighter))
+		{
+			m_iasControllers.push_back(newIAController);
+		}
+		else if (IAController* newIAController =
+			TryCreateIAController<Spectre, IASpectreBrain>(currentFighter))
+		{
+			m_iasControllers.push_back(newIAController);
+		}
+	}
+}
+
 void App::RegisterForEvents()
 {
 	auto onPlayerFinishTurnBind =
@@ -113,6 +162,18 @@ void App::Update()
 {
 	m_playerController->Update();
 	m_gameStateMachine->Update();
+}
+
+void App::UpdateAllFighterPossibilities()
+{
+	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
+	for (int i = 0; i < fighters.size(); i++)
+	{
+		fighters[i]->UpdateMovePossibility(
+			m_dungeon->m_widthDungeon,
+			m_dungeon->m_heightDungeon,
+			&m_dungeon->m_fighters);
+	}
 }
 
 void App::Draw()
@@ -150,6 +211,7 @@ void App::HandleOnPlayerFinishTurn()
 	State* iaTurnState =
 		m_gameStateMachine->GetState<IATurnState>();
 	m_gameStateMachine->SwitchToState(iaTurnState);
+	UpdateAllFighterPossibilities();
 	Draw();
 }
 
@@ -158,6 +220,7 @@ void App::HandleOnFinishIATurn()
 	State* playerTurnState =
 		m_gameStateMachine->GetState<PlayerTurnState>();
 	m_gameStateMachine->SwitchToState(playerTurnState);
+	UpdateAllFighterPossibilities();
 	Draw();
 }
 

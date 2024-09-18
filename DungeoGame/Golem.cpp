@@ -13,17 +13,6 @@ Golem::Golem(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove
 	//Attaque : Moyennement puissante
 }
 
-void Golem::Move()
-{
-	Maths::Vector2* pos = GetPosition();
-	Maths::Vector2 newPos = GetNewPosition();
-
-	if (*pos != newPos) 
-	{
-		*pos = newPos;
-		OnMove();
-	}
-}
 
 Maths::Vector2 Golem::GetNewPosition()
 {

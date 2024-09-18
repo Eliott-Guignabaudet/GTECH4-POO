@@ -18,5 +18,6 @@ public:
 
     void HandleExecuteCapacityEvent();
     void HandleAttackEvent();
+    void HandleMoveEvent();
 };
 

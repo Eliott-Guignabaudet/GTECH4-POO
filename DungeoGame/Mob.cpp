@@ -17,6 +17,18 @@ Mob::Mob(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int si
 
 }
 
+void Mob::Move()
+{
+	Maths::Vector2* pos = GetPosition();
+	Maths::Vector2 newPos = GetNewPosition();
+
+	if (*pos != newPos)
+	{
+		*pos = newPos;
+		OnMove();
+	}
+}
+
 void Mob::SetHeroTarget(Hero* target)
 {
 	m_targetPlayer = target;

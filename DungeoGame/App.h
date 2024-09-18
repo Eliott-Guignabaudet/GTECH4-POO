@@ -1,10 +1,10 @@
 #pragma once
 #include <vector>
+#include "IAController.h"
 
 class Dungeon;
 class StateMachine;
 class PlayerController;
-class IAController;
 class Fighter;
 
 class App
@@ -47,8 +47,16 @@ private:
 
 	void Init();
 	void InitStateMachine();
+	void InitDungeon(int width, int height);
+	void InitControllers();
+
+	template<typename T, typename U>
+	IAController* TryCreateIAController(Fighter* fighter);
+
 	void RegisterForEvents();
 	void Update();
+	void UpdateAllFighterPossibilities();
+
 
 #pragma endregion
 
@@ -61,3 +69,17 @@ private:
 #pragma endregion
 
 };
+
+template<typename TestMob, typename TestBrain>
+IAController* App::TryCreateIAController(Fighter* fighter)
+{
+	if (TestMob* mob = dynamic_cast<TestMob*>(fighter))
+	{
+		IAController* newIAController = new IAController();
+		newIAController->PossessFighter(fighter);
+		TestBrain* newBrain = new TestBrain();
+		newIAController->Init(newBrain);
+		return newIAController;
+	}
+	return nullptr;
+}

@@ -13,18 +13,6 @@ Spectre::Spectre(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCan
 	//Attaque : Faible
 }
 
-void Spectre::Move()
-{
-	Maths::Vector2* pos = GetPosition();
-	Maths::Vector2 newPos = GetNewPosition();
-
-	if (*pos != newPos)
-	{
-		*pos = newPos;
-		OnMove();
-	}
-}
-
 Maths::Vector2 Spectre::GetNewPosition()
 {
 	Maths::Vector2 newPos = Maths::Vector2(0, 0);
@@ -46,5 +34,5 @@ Maths::Vector2 Spectre::GetNewPosition()
 void Spectre::ExecuteCapacity()
 {
 	//Fuit dans la direction opposée pour éviter le héros
-
+	Move();
 }

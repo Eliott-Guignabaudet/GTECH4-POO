@@ -1,7 +1,7 @@
 #include "IAController.h"
 #include "Mob.h"
 #include "IABrain.h"
-
+#include "Hero.h"
 
 
 void IAController::Init(IABrain* iaBrain)
@@ -16,9 +16,12 @@ void IAController::Init(IABrain* iaBrain)
 		std::bind(&IAController::HandleExecuteCapacityEvent, this);
 	auto attackEventBind =
 		std::bind(&IAController::HandleAttackEvent, this);
+	auto moveEventBind =
+		std::bind(&IAController::HandleMoveEvent, this);
 
 	m_iaBrain->AttackEvent = attackEventBind;
-	m_iaBrain->ExecuteCapacityEvent = execCapacityBind;
+	m_iaBrain->CapacityEvent = execCapacityBind;
+	m_iaBrain->MoveEvent = moveEventBind;
 
 
 }
@@ -35,8 +38,7 @@ void IAController::PossessFighter(Fighter* fighter)
 
 void IAController::Execute()
 {
-	//TODO : Remove comment when targetplayer is hero (or fighter)
-	//m_iaBrain->Execute(GetMobCasted()->m_targetPlayer);
+	m_iaBrain->Execute(GetMobCasted());
 }
 
 Mob* IAController::GetMobCasted()
@@ -56,8 +58,12 @@ void IAController::HandleAttackEvent()
 {
 	if (Mob* mob = GetMobCasted())
 	{
-		//TODO : Remove comment when targetplayer is hero (or fighter)
-		//mob->Attack(mob->m_targetPlayer);
+		mob->Attack(mob->GetHeroTarget());
 	}
+}
+
+void IAController::HandleMoveEvent()
+{
+	m_possessedFighter->Move();
 }
 
