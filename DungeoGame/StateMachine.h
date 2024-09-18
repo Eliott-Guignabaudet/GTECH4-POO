@@ -13,8 +13,12 @@ public:
 	StateMachine();
 	
 	void Init(std::vector<State*>& m_states);
+	void Update();
+
 	void SwitchToState(State* state);
 	void SwitchToState(int index);
+
+	State* GetCurrentState();
 
 	template<typename T>
 	T* GetState();
@@ -30,5 +34,6 @@ T* StateMachine::GetState()
 			return state;
 		}
 	}
+	return nullptr;
 }
 

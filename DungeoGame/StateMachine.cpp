@@ -21,6 +21,11 @@ void StateMachine::Init(std::vector<State*>& states)
 	m_currentState->OnEnter();
 }
 
+void StateMachine::Update()
+{
+	m_currentState->Execute();
+}
+
 void StateMachine::SwitchToState(State* state)
 {
 	int numState = std::count(m_states.begin(), m_states.end(), state);
@@ -47,4 +52,9 @@ void StateMachine::SwitchToState(int index)
 	m_currentState->OnExit();
 	m_currentState = newState;
 	m_currentState->OnEnter();
+}
+
+State* StateMachine::GetCurrentState()
+{
+	return m_currentState;
 }

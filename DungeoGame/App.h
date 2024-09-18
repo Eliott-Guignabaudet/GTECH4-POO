@@ -54,6 +54,7 @@ private:
 #pragma region Events
 
 	void HandleOnPlayerFinishTurn();
+	void HandleOnFinishIATurn();
 
 #pragma endregion
 
