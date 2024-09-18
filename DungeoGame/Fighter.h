@@ -58,7 +58,7 @@ public :
 	virtual void TakeDamage(int damage, Fighter* target = nullptr);
 	virtual void Die();
 
-	void UpdateMovePossibility(int width, int height);
+	void UpdateMovePossibility(int width, int height, std::vector<Fighter*>* tabFighters);
 
 #pragma endregion
 };

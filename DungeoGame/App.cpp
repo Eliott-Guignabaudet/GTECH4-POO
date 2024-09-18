@@ -62,7 +62,12 @@ void App::Run()
 
 void App::Init()
 {
-	m_dungeon = new Dungeon(119, 20);
+	int width = 119;
+	int height = 20;
+	m_dungeon = new Dungeon(width, height);
+	m_dungeon->SpawnPlayer(width / 2, height / 2);
+	m_dungeon->SpawnMob();
+
 	m_gameStateMachine = new StateMachine();
 	m_playerController = new PlayerController();
 	m_playerController->PossessFighter(m_dungeon->m_heroEntity);
