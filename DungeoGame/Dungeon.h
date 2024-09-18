@@ -1,8 +1,9 @@
 #pragma once
 #include <vector>
 #include "Vector2.h"
+#include <iostream>
 
-class Entity;
+class Fighter;
 class Hero;
 class Mob;
 
@@ -14,8 +15,7 @@ public:
 #pragma region Variables
 
 	Hero* m_heroEntity;
-	Entity* m_defaultEntity;
-	std::vector<Entity*> m_entities;
+	std::vector<Fighter*> m_fighters;
 
 	int m_widthDungeon;
 	int m_heightDungeon;
@@ -32,18 +32,25 @@ public:
 	Dungeon(int width, int height);
 
 	void Clear();
-	void AddEntity(Entity* entity);
-	void RemoveEntity(Entity* entity);
+	void AddEntity(Fighter* entity);
+	void RemoveEntity(Fighter* entity);
 
 	void SpawnPlayer(int x, int y);
 	void SpawnMob(int nbMob = 10);
 	Mob* GetRandomMob(Maths::Vector2* randomPos);
 
-	bool DrawLimitBounds(bool xlimit, bool ylimit);
+	char FillBoundsOrDefaultChar(bool xlimit, bool ylimit);
 	void Draw();
 
-	//void ResizeConsole();
-	//void AfficherDimensionsConsole();
+	void InitTabChar(std::vector<std::vector<char>>* tabChar);
+	void ReplaceEntity(std::vector<std::vector<char>>* tabChar);
+	void DrawTabChar(std::vector<std::vector<char>>* tabChar);
+
+	void DrawStatistics();
+	void DrawLineTitle(int size, char Char, std::string message);
+	void DrawLineElement(int size, char Char, std::string message1, std::string message2);
+	void DrawLineWithNothing(int size, char Char);
+	void DrawLineWithAnything(int size, char Char);
 
 #pragma endregion
 

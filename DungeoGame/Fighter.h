@@ -5,11 +5,13 @@
 class Fighter :
 	public Entity
 {
-public:
+private:
 
 #pragma region Variables
 
 	Maths::Vector2 m_dir;
+
+	std::vector<Maths::Vector2> m_listPosPossible;
 
 	int m_life;
 	int m_maxLife;
@@ -19,6 +21,7 @@ public:
 	int m_sizeCanMove;
 
 #pragma endregion
+public:
 
 #pragma region Getteur / Setteur
 
@@ -26,7 +29,7 @@ public:
 	Maths::Vector2& GetDirection();
 
 	void SetMaxLife(int maxLife);
-	int GetMaxLife();
+	int GetLife();
 
 	//void SetHealth(int health);
 
@@ -43,10 +46,13 @@ public:
 	Fighter();
 	Fighter(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove);
 
-	//std::vector<Entity*> NearFighter();
+	void SetMovePosPossibility(int xLimit, int Ylimit);
+	std::vector<Maths::Vector2> GetMovePosPossibility();
 	void Attack(Fighter* target);
 	void TakeDamage(int damage);
 	virtual void Die();
+
+	void UpdateMovePossibility(int width, int height);
 
 #pragma endregion
 };
