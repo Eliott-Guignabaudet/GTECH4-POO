@@ -17,35 +17,70 @@ void PlayerController::PossessFighter(Fighter* fighter)
 
 void PlayerController::Update()
 {
-	if (!m_possessedFighter) 
+	if (!m_isActive || !m_possessedFighter) 
 	{
 		return;
 	}
-	Vector2 newdir = Vector2(0,0);
+	HandleInput();
+
+}
+
+void PlayerController::HandleInput()
+{
+	Vector2 newdir = Vector2(0, 0);
+	HandleInputDirection(newdir);
+	HandleInputFinishTurn();
+	MovePlayer(newdir);
+	
+}
+
+void PlayerController::HandleInputDirection(Vector2& direction)
+{
 	if (Input::IsKeyPush(VK_UP))
 	{
-		newdir = Vector2(0, -1);
+		direction = Vector2(0, -1);
 	}
 	if (Input::IsKeyPush(VK_DOWN))
 	{
-		newdir = Vector2(0, 1);
+		direction = Vector2(0, 1);
 	}
 	if (Input::IsKeyPush(VK_LEFT))
 	{
-		newdir = Vector2(-1, 0);
+		direction = Vector2(-1, 0);
 	}
 	if (Input::IsKeyPush(VK_RIGHT))
 	{
-		newdir = Vector2(1, 0);
+		direction = Vector2(1, 0);
 	}
-	m_possessedFighter->SetDirection(newdir);
+}
+
+void PlayerController::HandleInputFinishTurn()
+{
+	if (Input::IsKeyPush(VK_SPACE))
+	{
+		if (OnFinishTurn)
+		{
+			OnFinishTurn();
+		}
+		App::GetInstance()->Draw();
+	}
+	if (Input::IsKeyPush(VK_RETURN))
+	{
+		// TODO : Execute Attack
+		App::GetInstance()->Draw();
+	}
+}
+
+void PlayerController::MovePlayer(Vector2 direction)
+{
+	// TODO : Change Move
+
+	m_possessedFighter->SetDirection(direction);
 	Vector2* pos = m_possessedFighter->GetPosition();
-	pos->m_x += newdir.m_x;
-	pos->m_y += newdir.m_y;
-	if (newdir.m_x != 0 || newdir.m_y != 0)
+	pos->m_x += direction.m_x;
+	pos->m_y += direction.m_y;
+	if (direction.m_x != 0 || direction.m_y != 0)
 	{
 		App::GetInstance()->Draw();
 	}
-	// TODO : Move
-
 }

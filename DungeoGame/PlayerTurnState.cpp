@@ -1,10 +1,12 @@
 #include <iostream>
 #include "PlayerTurnState.h"
+#include "App.h"
+#include "PlayerController.h"
 
 void PlayerTurnState::OnEnter()
 {
 	std::cout << "Enter Player turn state" << std::endl;
-	// TODO: Enable Player controller
+	App::GetInstance()->GetPlayerController()->SetActive(true);
 }
 
 void PlayerTurnState::Execute()
@@ -13,5 +15,5 @@ void PlayerTurnState::Execute()
 
 void PlayerTurnState::OnExit()
 {
-	// TODO: Disable Player Controller 
+	App::GetInstance()->GetPlayerController()->SetActive(false);
 }

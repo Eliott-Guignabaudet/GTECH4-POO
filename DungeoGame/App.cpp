@@ -15,6 +15,9 @@
 #include "GameOverState.h"
 #pragma endregion
 
+#pragma region Singleton
+
+
 
 App* App::s_instance = nullptr;
 
@@ -34,12 +37,14 @@ App* App::GetInstance()
 	}
     return s_instance;
 }
+#pragma endregion
 
 void App::Run()
 {
 	std::cout << "Start Application" << std::endl;
 	Time::GetInstance()->StartTime();
 	Init();
+	RegisterForEvents();
 	Draw();
 	while (true)
 	{
@@ -51,6 +56,7 @@ void App::Run()
 	}
 	
 }
+
 #pragma region Lifecycle
 
 void App::Init()
@@ -78,15 +84,25 @@ void App::InitStateMachine()
 		iaTurnState,
 		gameOverState
 	};
-
+	
 
 	m_gameStateMachine->Init(states);
+
+	m_gameStateMachine->SwitchToState(playerTurnState);
+}
+
+void App::RegisterForEvents()
+{
+	auto OnPlayerFinishTurnBind =
+		std::bind(
+			&App::HandleOnPlayerFinishTurn, 
+			this);
+	m_playerController->OnFinishTurn = OnPlayerFinishTurnBind;
+
 }
 
 void App::Update()
 {
-	// TODO: Update
-	// 
 	m_playerController->Update();
 	if (Input::IsKeyPush('A'))
 	{
@@ -109,6 +125,31 @@ void App::Draw()
 	std::cout 
 		<< Time::GetInstance()->GetElapsedTime() 
 		<< std::endl;
+}
+
+#pragma endregion
+
+#pragma region Events
+
+void App::HandleOnPlayerFinishTurn()
+{
+	State* iaTurnState =
+		m_gameStateMachine->GetState<IATurnState>();
+	m_gameStateMachine->SwitchToState(iaTurnState);
+}
+
+#pragma endregion
+
+#pragma region Getters
+
+PlayerController* App::GetPlayerController()
+{
+	return m_playerController;
+}
+
+std::vector<IAController*> App::GetIasControllers()
+{
+	return m_iasControllers;
 }
 
 #pragma endregion
