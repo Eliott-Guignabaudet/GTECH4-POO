@@ -93,27 +93,37 @@ void App::InitStateMachine()
 
 void App::RegisterForEvents()
 {
-	auto OnPlayerFinishTurnBind =
-		std::bind(
-			&App::HandleOnPlayerFinishTurn, 
-			this);
-	m_playerController->OnFinishTurn = OnPlayerFinishTurnBind;
+	auto onPlayerFinishTurnBind =
+		std::bind( &App::HandleOnPlayerFinishTurn, this);
+	m_playerController->OnFinishTurn = onPlayerFinishTurnBind;
+
+	auto onIaTurnFinishBind =
+		std::bind(&App::HandleOnFinishIATurn, this);
+	IATurnState* iaTurnState =
+		m_gameStateMachine->GetState<IATurnState>();
+	iaTurnState->OnFinishIATurn = onIaTurnFinishBind;
 
 }
 
 void App::Update()
 {
 	m_playerController->Update();
-	if (Input::IsKeyPush('A'))
-	{
-		Draw();
-	}
+	m_gameStateMachine->Update();
 }
 
 void App::Draw()
 {
 	system("cls");
 
+	State* state = m_gameStateMachine->GetCurrentState();
+	if (dynamic_cast<PlayerTurnState*>(state))
+	{
+		std::cout << "Player Turn\n";
+	}
+	if (dynamic_cast<IATurnState*>(state))
+	{
+		std::cout << "IA Turn\n";
+	}
 	// TODO: Draw Function
 	//		 Draw Title
 	//		 Draw CurrentTurn
@@ -136,6 +146,15 @@ void App::HandleOnPlayerFinishTurn()
 	State* iaTurnState =
 		m_gameStateMachine->GetState<IATurnState>();
 	m_gameStateMachine->SwitchToState(iaTurnState);
+	Draw();
+}
+
+void App::HandleOnFinishIATurn()
+{
+	State* playerTurnState =
+		m_gameStateMachine->GetState<PlayerTurnState>();
+	m_gameStateMachine->SwitchToState(playerTurnState);
+	Draw();
 }
 
 #pragma endregion

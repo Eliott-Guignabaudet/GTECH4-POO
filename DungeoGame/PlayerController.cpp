@@ -62,12 +62,12 @@ void PlayerController::HandleInputFinishTurn()
 		{
 			OnFinishTurn();
 		}
-		App::GetInstance()->Draw();
+		//App::GetInstance()->Draw();
 	}
 	if (Input::IsKeyPush(VK_RETURN))
 	{
 		// TODO : Execute Attack
-		App::GetInstance()->Draw();
+		//App::GetInstance()->Draw();
 	}
 }
 
