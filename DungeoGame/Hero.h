@@ -11,6 +11,7 @@ public:
 	Hero();
 	Hero(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove);
 
+
 #pragma endregion
 };
 

@@ -3,8 +3,7 @@
 
 class Entity
 {
-public:
-
+protected :
 #pragma region Variables
 
 	Maths::Vector2* m_pos;
@@ -13,6 +12,7 @@ public:
 
 #pragma endregion
 
+public:
 #pragma region Getteur / Setteur
 
 	void SetPosition(Maths::Vector2* pos);

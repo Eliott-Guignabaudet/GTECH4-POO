@@ -5,6 +5,7 @@ class Dungeon;
 class StateMachine;
 class PlayerController;
 class IAController;
+class Fighter;
 
 class App
 {
@@ -55,6 +56,7 @@ private:
 
 	void HandleOnPlayerFinishTurn();
 	void HandleOnFinishIATurn();
+	void HandleOnFighterMoved(Fighter* fighter);
 
 #pragma endregion
 

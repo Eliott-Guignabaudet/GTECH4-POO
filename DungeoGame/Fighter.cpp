@@ -1,5 +1,7 @@
 #include "Fighter.h"
 
+std::function<void(Fighter*)> Fighter::OnFighterMoved;
+
 #pragma region Getteur / Setteur
 
 void Fighter::SetDirection(Maths::Vector2& dir)
@@ -107,12 +109,39 @@ std::vector<Maths::Vector2> Fighter::GetMovePosPossibility()
 	return m_listPosPossible;
 }
 
-void Fighter::Attack(Fighter* target)
+
+void Fighter::Move()
 {
-	target->TakeDamage(GetAttackDamage());
+	int newX = m_pos->m_x + m_dir.m_x;
+	int newY = m_pos->m_y + m_dir.m_y;
+
+	for (Maths::Vector2 posPossible : m_listPosPossible)
+	{
+		if (newX == posPossible.m_x && newY == posPossible.m_y)
+		{
+			m_pos->m_x = newX;
+			m_pos->m_y = newY;
+			OnMove();
+			return;
+		}
+	}
+
 }
 
-void Fighter::TakeDamage(int damage)
+void Fighter::OnMove()
+{
+	if (OnFighterMoved)
+	{
+		OnFighterMoved(this);
+	}
+}
+
+void Fighter::Attack(Fighter* target)
+{
+	target->TakeDamage(GetAttackDamage(), this);
+}
+
+void Fighter::TakeDamage(int damage, Fighter* target)
 {
 	m_life -= damage;
 }
