@@ -139,10 +139,12 @@
     <ClCompile Include="Golem.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="IAAttackState.cpp" />
+    <ClCompile Include="IABrain.cpp" />
     <ClCompile Include="IACapacityState.cpp" />
     <ClCompile Include="IAController.cpp" />
     <ClCompile Include="IADieState.cpp" />
     <ClCompile Include="IAMoveState.cpp" />
+    <ClCompile Include="IAMowerBrain.cpp" />
     <ClCompile Include="IATurnState.cpp" />
     <ClCompile Include="InitState.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -167,10 +169,12 @@
     <ClInclude Include="Golem.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="IAAttackState.h" />
+    <ClInclude Include="IABrain.h" />
     <ClInclude Include="IACapacityState.h" />
     <ClInclude Include="IAController.h" />
     <ClInclude Include="IADieState.h" />
     <ClInclude Include="IAMoveState.h" />
+    <ClInclude Include="IAMowerBrain.h" />
     <ClInclude Include="IATurnState.h" />
     <ClInclude Include="InitState.h" />
     <ClInclude Include="Input.h" />
