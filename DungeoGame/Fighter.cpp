@@ -17,9 +17,9 @@ void Fighter::SetMaxLife(int maxLife)
 	m_maxLife = maxLife;
 }
 
-int Fighter::GetMaxLife()
+int Fighter::GetLife()
 {
-	return m_maxLife;
+	return m_life;
 }
 
 void Fighter::SetAttackDamage(int attackDamage)
@@ -65,14 +65,47 @@ Fighter::Fighter(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage
 	m_attackDamage(attackDamage),
 	m_sizeCanMove(sizeCanMove)
 {
-
+	m_listPosPossible = std::vector<Maths::Vector2>();
 }
 
-//std::vector<Entity*> Fighter::NearFighter(std::vector<std::vector<Entity*>> tab)
-//{
-//	std::vector<Entity*> 
-//	return nullptr;
-//}
+void Fighter::SetMovePosPossibility(int xLimit, int Ylimit)
+{
+	int nb = 1;
+	for (int i = 1; i <= m_sizeCanMove; i++) 
+	{
+		nb = nb + (i * 4);
+	}
+
+	m_listPosPossible.clear();
+
+	for (int i = m_pos->m_x - m_sizeCanMove; i <= m_pos->m_x + m_sizeCanMove; i++)
+	{
+		if (i <= 0 || i >= xLimit) {
+			continue;
+		}
+
+		for (int j = m_pos->m_y - m_sizeCanMove; j <= m_pos->m_y + m_sizeCanMove; j++)
+		{
+			if (j <= 0 || j >= Ylimit) {
+				continue;
+			}
+
+			int offsetX = abs(m_pos->m_x - i);
+			int offsetY = abs(m_pos->m_y - j);
+
+			if (offsetX + offsetY <= m_sizeCanMove) 
+			{
+				m_listPosPossible.push_back(Maths::Vector2(i, j));
+			}
+			
+		}
+	}
+}
+
+std::vector<Maths::Vector2> Fighter::GetMovePosPossibility()
+{
+	return m_listPosPossible;
+}
 
 void Fighter::Attack(Fighter* target)
 {
@@ -87,6 +120,11 @@ void Fighter::TakeDamage(int damage)
 void Fighter::Die()
 {
 
+}
+
+void Fighter::UpdateMovePossibility(int width, int height)
+{
+	SetMovePosPossibility(width, height);
 }
 
 #pragma endregion
