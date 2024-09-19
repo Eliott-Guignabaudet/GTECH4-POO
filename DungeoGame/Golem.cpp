@@ -67,6 +67,11 @@ void Golem::GetKillRewards()
 
 void Golem::TakeDamage(int damage, Fighter* fighter)
 {
+	if (!dynamic_cast<Hero*>(fighter))
+	{
+		Mob::TakeDamage(damage, fighter); 
+		return;
+	}
 	ExecuteCapacity();
 	if (m_haveCancelDamage)
 	{
