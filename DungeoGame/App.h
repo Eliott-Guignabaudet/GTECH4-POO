@@ -63,6 +63,7 @@ private:
 
 	void HandleOnPlayerFinishTurn();
 	void HandleOnFinishIATurn();
+	void HandleOnIAControllerFinish();
 	void HandleOnRedrawFighter(Fighter* fighter);
 
 #pragma endregion

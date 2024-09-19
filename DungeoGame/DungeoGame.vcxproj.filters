@@ -138,8 +138,26 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Fichiers sources\Maths</Filter>
     </ClCompile>
-	<ClCompile Include="Time.cpp">
+    <ClCompile Include="Time.cpp">
       <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
+    <ClCompile Include="IABrain.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="IAGolemBrain.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="IAMowerBrain.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="IASpectreBrain.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="DungeonParser.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,11 +233,35 @@
     <ClInclude Include="State.h">
       <Filter>Fichiers d%27en-tête\StateMachine</Filter>
     </ClInclude>
-	<ClCompile Include="Vector2.cpp">
+    <ClCompile Include="Vector2.cpp">
       <Filter>Fichiers d%27en-tête\Maths</Filter>
     </ClCompile>
-		<ClCompile Include="Time.cpp">
+    <ClCompile Include="Time.cpp">
       <Filter>Fichiers d%27en-tête\App</Filter>
     </ClCompile>
+    <ClInclude Include="IABrain.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="IAGolemBrain.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="IAMowerBrain.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="IASpectreBrain.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="DungeonParser.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

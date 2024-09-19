@@ -4,25 +4,36 @@
 #include "Time.h"
 #include "Dungeon.h"
 #include "Input.h"
+
 #include "PlayerController.h"
 #include "IAController.h"
+
+#pragma region Fighters Includes
+
 #include "Fighter.h"
 #include "Hero.h"
-
 #include "Mower.h"
 #include "Golem.h"
 #include "Spectre.h"
+
+#pragma endregion
+
+#pragma region IABrain Includes
 
 #include "IAMowerBrain.h"
 #include "IASpectreBrain.h"
 #include "IAGolemBrain.h"
 
+#pragma endregion
+
 #pragma region StateMachine Includes
+
 #include "StateMachine.h"
 #include "InitState.h"
 #include "PlayerTurnState.h"
 #include "IATurnState.h"
 #include "GameOverState.h"
+
 #pragma endregion
 
 #pragma region Singleton
@@ -146,16 +157,21 @@ void App::RegisterForEvents()
 	auto onPlayerFinishTurnBind =
 		std::bind( &App::HandleOnPlayerFinishTurn, this);
 	m_playerController->OnFinishTurn = onPlayerFinishTurnBind;
-
-	auto onIaTurnFinishBind =
-		std::bind(&App::HandleOnFinishIATurn, this);
-	IATurnState* iaTurnState =
-		m_gameStateMachine->GetState<IATurnState>();
-	iaTurnState->OnFinishIATurn = onIaTurnFinishBind;
-
 	auto onRedrawFighterBind =
 		std::bind(&App::HandleOnRedrawFighter, this, _1);
 	Fighter::OnRedrawMoveFighter = onRedrawFighterBind;
+
+
+	IATurnState* iaTurnState =
+		m_gameStateMachine->GetState<IATurnState>();
+	auto onIaTurnFinishBind =
+		std::bind(&App::HandleOnFinishIATurn, this);
+	auto onIAControllerFinishBind =
+		std::bind(&App::HandleOnIAControllerFinish, this);
+	
+	iaTurnState->OnFinishIATurn = onIaTurnFinishBind;
+	iaTurnState->OnIAControllerFinish = onIAControllerFinishBind;
+
 }
 
 void App::Update()
@@ -222,8 +238,17 @@ void App::HandleOnFinishIATurn()
 	Draw();
 }
 
+void App::HandleOnIAControllerFinish()
+{
+	UpdateAllFighterPossibilities();
+}
+
 void App::HandleOnRedrawFighter(Fighter* fighter)
 {
+	if (Hero* hero = dynamic_cast<Hero*>(fighter))
+	{
+		m_dungeon->UpdateNearFighterPlayer();
+	}
 	Draw();
 }
 

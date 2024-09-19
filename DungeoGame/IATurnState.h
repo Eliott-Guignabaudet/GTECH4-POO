@@ -12,6 +12,7 @@ public:
     virtual void Execute() override;
     virtual void OnExit() override;
     
+    std::function<void()> OnIAControllerFinish;
     std::function<void()> OnFinishIATurn;
 private:
     bool m_isTurnFinish;

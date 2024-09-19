@@ -37,6 +37,10 @@ void IATurnState::Execute()
 		m_currentIAs[m_currentIAIndex]->Execute();
 		m_currentIAIndex++;
 		m_elapsedTimeBeforeLastExecution = 0.f;
+		if (OnIAControllerFinish)
+		{
+			OnIAControllerFinish();
+		}
 	}
 
 	m_elapsedTimeBeforeLastExecution += 
