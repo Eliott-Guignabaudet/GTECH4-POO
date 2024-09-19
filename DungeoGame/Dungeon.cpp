@@ -46,7 +46,7 @@ Dungeon::Dungeon(int width, int height) :
         std::bind(&Dungeon::HandleOnAttackAllFighters, this, _1);
     Mower::OnAttackAllFighter = onAttackAllFighter;
 
-    //std::srand(time(NULL));
+    std::srand(time(NULL));
 }
 
 void Dungeon::InitWithData(const DungeonData& data)

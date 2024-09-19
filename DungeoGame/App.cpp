@@ -125,7 +125,10 @@ void App::InitDungeon(int width, int height)
 
 void App::InitControllers()
 {
-	m_playerController = new PlayerController();
+	if (m_playerController == nullptr)
+	{
+		m_playerController = new PlayerController();
+	}
 	m_playerController->PossessFighter(m_dungeon->m_heroEntity);
 
 	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
@@ -222,6 +225,11 @@ void App::RemoveIAController(IAController* iaController)
 	}
 	m_iasControllers.erase(m_iasControllers.begin() + iaIndex);
 	delete iaController;
+	if (m_iasControllers.size() == 0)
+	{
+		m_dungeon->SpawnMob();
+		InitControllers();
+	}
 }
 
 #pragma endregion
