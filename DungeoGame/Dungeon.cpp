@@ -155,7 +155,11 @@ void Dungeon::UpdateMovePossibility(Fighter* fighter)
 {
     fighter->SetMovePosPossibility(m_widthDungeon, m_heightDungeon);
     fighter->SetRemoveFighterPosPossibility(&m_fighters);
-    //m_heroEntity->SetNearPosPlayer(m_fighters);   // A la fin du tour du player
+}
+
+void Dungeon::UpdateNearFighterPlayer()
+{
+    m_heroEntity->SetNearPosPlayer(m_fighters);
 }
 
 int Dungeon::GetConsoleWidthSize()

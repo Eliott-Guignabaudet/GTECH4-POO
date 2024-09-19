@@ -12,6 +12,7 @@ void PlayerController::PossessFighter(Fighter* fighter)
 	{
 		return;
 	}
+	m_fighterCasted = hero;
 	Controller::PossessFighter(fighter);
 }
 
@@ -23,9 +24,9 @@ void PlayerController::Update()
 	}
 	m_possessedFighter->isHisTurn = true;
 
-	if (OnEnterPlayer) 
+	if (m_isEnterPlayer) 
 	{
-		OnEnterPlayer = false;
+		m_isEnterPlayer = false;
 		m_possessedFighter->OnRedrawMovePossibilities();
 	}
 

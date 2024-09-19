@@ -6,7 +6,7 @@
 void PlayerTurnState::OnEnter()
 {
 	std::cout << "Enter Player turn state" << std::endl;
-	App::GetInstance()->GetPlayerController()->OnEnterPlayer = true;
+	App::GetInstance()->GetPlayerController()->m_isEnterPlayer = true;
 	App::GetInstance()->GetPlayerController()->SetActive(true);
 }
 

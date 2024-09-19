@@ -3,6 +3,7 @@
 #include "Controller.h"
 #include "Vector2.h"
 
+class Hero;
 
 using namespace Maths;
 class PlayerController :
@@ -12,8 +13,9 @@ public:
     virtual void PossessFighter(Fighter* fighter) override;
     virtual void Update() override;
     std::function<void()> OnFinishTurn;
-    bool OnEnterPlayer;
+    bool m_isEnterPlayer;
 private:
+    Hero* m_fighterCasted;
     void HandleInput();
     void HandleInputDirection(Vector2& direction);
     void HandleInputFinishTurn();

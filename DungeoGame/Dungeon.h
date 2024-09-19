@@ -44,6 +44,7 @@ public:
 	void SpawnMob(int nbMob = 10);
 	Mob* GetRandomMob(Maths::Vector2 randomPos);
 	void UpdateMovePossibility(Fighter* fighter);
+	void UpdateNearFighterPlayer();
 	int GetConsoleWidthSize();
 
 	char FillBoundsOrDefaultChar(bool xlimit, bool ylimit);
