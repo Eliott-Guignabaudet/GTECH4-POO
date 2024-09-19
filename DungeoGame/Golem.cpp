@@ -2,13 +2,17 @@
 #include "Hero.h"
 
 Golem::Golem() :
-	Mob::Mob()
+	Mob::Mob(),
+	m_haveCancelDamage(false),
+	m_cancelDamageRate(25)
 {
 
 }
 
 Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
-	Mob::Mob(pos, 'G', maxLife, attackDamage, sizeCanMove, cooldown, hero)
+	Mob::Mob(pos, 'G', maxLife, attackDamage, sizeCanMove, cooldown, hero), 
+	m_haveCancelDamage(false),
+	m_cancelDamageRate(25)
 {
 	//Attaque : Moyennement puissante
 }
@@ -43,6 +47,13 @@ Vector2 Golem::GetNewPosition(int sizeCanMove)
 
 void Golem::ExecuteCapacity()
 {
+	float randomValue = rand() % 100 + 1;
+	if (randomValue <= m_cancelDamageRate)
+	{
+		m_haveCancelDamage = true; 
+		return;
+	}
+	m_haveCancelDamage = false;
 	//Capacité spéciale : Peut résister totalement à l’attaque du héros
 
 }
@@ -51,4 +62,14 @@ void Golem::GetKillRewards()
 {
 	int attackDamageGolem = GetAttackDamage();
 	GetHeroTarget()->UpgradeAttack(attackDamageGolem);
+}
+
+void Golem::TakeDamage(int damage, Fighter* fighter)
+{
+	ExecuteCapacity();
+	if (m_haveCancelDamage)
+	{
+		return;
+	}
+	Mob::TakeDamage(damage, fighter);
 }

@@ -5,6 +5,9 @@ class Golem :
     public Mob
 {
 
+private:
+    bool m_haveCancelDamage;
+    float m_cancelDamageRate;
 public:
 
 #pragma region Class function
@@ -15,7 +18,7 @@ public:
     virtual Vector2 GetNewPosition(int sizeCanMove = 0) override;
     virtual void ExecuteCapacity() override;
     virtual void GetKillRewards() override;
-
+    virtual void TakeDamage(int damage, Fighter* fighter = nullptr) override;
 #pragma endregion
 
 };

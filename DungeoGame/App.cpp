@@ -118,9 +118,9 @@ void App::InitStateMachine()
 
 void App::InitDungeon(int width, int height)
 {
-	//m_dungeon->InitWithData(DungeonParser::ParseDungeon("DungeonMap.txt"));
-	m_dungeon->SpawnPlayer(width / 2, height / 2);
-	m_dungeon->SpawnMob();
+	m_dungeon->InitWithData(DungeonParser::ParseDungeon("DungeonMap.txt"));
+	//m_dungeon->SpawnPlayer(width / 2, height / 2);
+	//m_dungeon->SpawnMob();
 }
 
 void App::InitControllers()
@@ -251,6 +251,10 @@ void App::HandleOnFinishIATurn()
 	State* playerTurnState =
 		m_gameStateMachine->GetState<PlayerTurnState>();
 	m_gameStateMachine->SwitchToState(playerTurnState);
+	if (m_dungeon->m_heroEntity == nullptr || m_dungeon->m_heroEntity->m_isDead)
+	{
+		ResetDungeon();
+	}
 	UpdateAllFighterPossibilities();
 	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
@@ -269,8 +273,28 @@ void App::HandleOnRedrawFighter(Fighter* fighter)
 	}
 	Draw();
 }
-
 #pragma endregion
+
+void App::ResetDungeon()
+{
+	m_dungeon->Clear();
+	for (int i = 0; i < m_iasControllers.size(); i++)
+	{
+		if (m_iasControllers[i] == nullptr)
+		{
+			continue;
+		}
+		if (m_iasControllers[i]->GetIABrain() != nullptr)
+		{
+			delete m_iasControllers[i]->GetIABrain();
+		}
+		delete m_iasControllers[i];
+	}
+	m_iasControllers.clear();
+	InitDungeon(20, 10);
+	InitControllers();
+}
+
 
 #pragma region Getters
 

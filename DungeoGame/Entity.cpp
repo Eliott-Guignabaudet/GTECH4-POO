@@ -1,6 +1,7 @@
 #include "Entity.h"
 #include <iostream>
 
+int Entity::s_currentEntityIndex = 0;
 
 #pragma region Getteur / Setteur
 
@@ -24,20 +25,27 @@ char Entity::GetSprite()
 	return m_sprite;
 }
 
+int Entity::GetId()
+{
+	return m_id;
+}
+
 #pragma endregion
 
 #pragma region Class function
 
 Entity::Entity() :
-	m_pos(0,0),
-	m_sprite(' ')
+	m_pos(0, 0),
+	m_sprite(' '),
+	m_id(Entity::s_currentEntityIndex++)
 {
 
 }
 
 Entity::Entity(Vector2 pos, char sprite) :
 	m_pos(pos),
-	m_sprite(sprite)
+	m_sprite(sprite),
+	m_id(Entity::s_currentEntityIndex++)
 {
 
 }

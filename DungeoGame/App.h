@@ -69,6 +69,7 @@ private:
 	void HandleOnRedrawFighter(Fighter* fighter);
 
 #pragma endregion
+	void ResetDungeon();
 
 };
 

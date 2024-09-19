@@ -49,6 +49,11 @@ Mob* IAController::GetMobCasted()
 	return dynamic_cast<Mob*>(m_possessedFighter);
 }
 
+IABrain* IAController::GetIABrain()
+{
+	return m_iaBrain;
+}
+
 bool IAController::IsValid()
 {
 	return m_possessedFighter!= nullptr && m_iaBrain != nullptr;

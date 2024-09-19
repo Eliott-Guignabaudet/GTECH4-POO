@@ -5,6 +5,9 @@ using namespace Maths;
 
 class Entity
 {
+private:
+	static int s_currentEntityIndex;
+	int m_id;
 protected :
 #pragma region Variables
 
@@ -23,6 +26,7 @@ public:
 	void SetSprite(char sprite);
 	char GetSprite();
 
+	int GetId();
 #pragma endregion
 
 #pragma region Class function
