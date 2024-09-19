@@ -17,6 +17,12 @@ Vector2& Fighter::GetDirection()
 void Fighter::SetMaxLife(int maxLife)
 {
 	m_maxLife = maxLife;
+	m_life = maxLife;
+}
+
+int Fighter::GetMaxLife()
+{
+	return m_maxLife;
 }
 
 int Fighter::GetLife()
@@ -55,21 +61,23 @@ Fighter::Fighter() :
 	m_life(0),
 	m_attackDamage(0),
 	m_sizeCanMove(0),
-	isHisTurn(false)
+	isHisTurn(false),
+	m_isDead(false)
 {
 
 }
 
 Fighter::Fighter(Vector2 pos, char sprite, int maxLife, int attackDamage, int sizeCanMove) :
 	Entity::Entity(pos, sprite),
-	m_dir(0, 0),
-	m_maxLife(maxLife),
-	m_life(maxLife),
-	m_attackDamage(attackDamage),
-	m_sizeCanMove(sizeCanMove),
-	isHisTurn(false)
+	m_dir(0, 0)
 {
 	m_listPosPossibilities = std::vector<Vector2>();
+	isHisTurn =false;
+	m_isDead =false;
+
+	SetMaxLife(maxLife);
+	SetAttackDamage(attackDamage);
+	SetSizeMove(sizeCanMove);
 }
 
 void Fighter::SetMovePosPossibility(int xLimit, int Ylimit)
@@ -156,14 +164,23 @@ void Fighter::Attack(Fighter* target)
 	target->TakeDamage(GetAttackDamage(), this);
 }
 
-void Fighter::TakeDamage(int damage, Fighter* target)
+void Fighter::TakeDamage(int damage, Fighter* origin)
 {
 	m_life -= damage;
+
+	if (m_life <= 0 && !m_isDead)
+	{
+		m_isDead = true;
+		Die();
+	}
 }
 
 void Fighter::Die()
 {
-
+	if (OnDie)
+	{
+		OnDie();
+	}
 }
 
 #pragma endregion

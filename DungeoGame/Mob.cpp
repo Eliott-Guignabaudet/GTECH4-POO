@@ -137,3 +137,9 @@ Vector2* Mob::GetNearPos()
 {
 	return m_nearPoses;
 }
+
+void Mob::Die()
+{
+	Fighter::Die();
+	GetKillRewards();
+}

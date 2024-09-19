@@ -40,6 +40,9 @@ public:
     virtual void Move() override;
     virtual Vector2 GetNewPosition(int sizeCanMove = 0) = 0;
     virtual void ExecuteCapacity() = 0;
+    virtual void GetKillRewards() = 0;
+
+    virtual void Die() override;
 
 #pragma endregion
 };

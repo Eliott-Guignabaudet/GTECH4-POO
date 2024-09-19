@@ -40,3 +40,8 @@ void Spectre::ExecuteCapacity()
 	//Fuit dans la direction opposée pour éviter le héros
 	Move();
 }
+
+void Spectre::GetKillRewards()
+{
+	GetHeroTarget()->HealPlayer();
+}

@@ -22,8 +22,10 @@ private:
 
 public :
 
+	bool m_isDead;
 	bool isHisTurn;
 	static std::function<void(Fighter*)> OnRedrawMoveFighter;
+	std::function<void()> OnDie;
 
 #pragma endregion
 
@@ -33,6 +35,7 @@ public :
 	Vector2& GetDirection();
 
 	void SetMaxLife(int maxLife);
+	int GetMaxLife();
 	int GetLife();
 
 	//void SetHealth(int health);
@@ -57,7 +60,7 @@ public :
 	virtual void Move();
 	void OnRedrawMovePossibilities();
 	void Attack(Fighter* target);
-	virtual void TakeDamage(int damage, Fighter* target = nullptr);
+	virtual void TakeDamage(int damage, Fighter* origin = nullptr);
 	virtual void Die();
 
 #pragma endregion

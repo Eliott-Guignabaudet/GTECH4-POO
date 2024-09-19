@@ -118,9 +118,9 @@ void App::InitStateMachine()
 
 void App::InitDungeon(int width, int height)
 {
-	m_dungeon->InitWithData(DungeonParser::ParseDungeon("DungeonMap.txt"));
-	//m_dungeon->SpawnPlayer(width / 2, height / 2);
-	//m_dungeon->SpawnMob();
+	//m_dungeon->InitWithData(DungeonParser::ParseDungeon("DungeonMap.txt"));
+	m_dungeon->SpawnPlayer(width / 2, height / 2);
+	m_dungeon->SpawnMob();
 }
 
 void App::InitControllers()
@@ -184,6 +184,7 @@ void App::Update()
 
 void App::UpdateAllFighterPossibilities()
 {
+	//m_dungeon->RemoveFighters();
 	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
 	for (int i = 0; i < fighters.size(); i++)
 	{
@@ -237,6 +238,7 @@ void App::HandleOnFinishIATurn()
 		m_gameStateMachine->GetState<PlayerTurnState>();
 	m_gameStateMachine->SwitchToState(playerTurnState);
 	UpdateAllFighterPossibilities();
+	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
 }
 

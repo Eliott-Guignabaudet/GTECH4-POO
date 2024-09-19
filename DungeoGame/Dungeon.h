@@ -40,7 +40,7 @@ public:
 	void InitWithData(const DungeonData& data);
 	void Clear();
 	void AddFighter(Fighter* entity);
-	void RemoveFighter(Fighter* entity);
+	void RemoveFighters();
 
 	void SpawnPlayer(int x, int y);
 	void SpawnMob(int nbMob = 10);
@@ -48,6 +48,7 @@ public:
 	void UpdateMovePossibility(Fighter* fighter);
 	void UpdateNearFighterPlayer();
 	int GetConsoleWidthSize();
+	void HandleOnAttackAllFighters(Fighter* origin);
 
 	char FillBoundsOrDefaultChar(bool xlimit, bool ylimit);
 	void Draw();

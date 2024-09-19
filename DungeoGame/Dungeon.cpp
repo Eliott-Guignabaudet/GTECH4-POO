@@ -13,6 +13,8 @@ const char HORIZONTAL_WALL = '-';
 const char VERTICAL_WALL = '|';
 const int DRAW_OFFSET = 2;
 
+using namespace std::placeholders;
+
 enum class EnumMob {
     Golem = 0,
     Spectre,
@@ -39,6 +41,10 @@ Dungeon::Dungeon(int width, int height) :
     m_csbi = new CONSOLE_SCREEN_BUFFER_INFO();
     m_maxWidthDungeon = GetConsoleWidthSize();
     m_fighters = std::vector<Fighter*>();
+
+    auto onAttackAllFighter =
+        std::bind(&Dungeon::HandleOnAttackAllFighters, this, _1);
+    Mower::OnAttackAllFighter = onAttackAllFighter;
 
     //std::srand(time(NULL));
 }
@@ -106,11 +112,11 @@ void Dungeon::AddFighter(Fighter* fighter)
     m_fighters.push_back(fighter);
 }
 
-void Dungeon::RemoveFighter(Fighter* entity)
+void Dungeon::RemoveFighters()
 {
     for (auto it = m_fighters.begin(); it != m_fighters.end();)
     {
-        if (*it == entity)
+        if ((*it)->m_isDead)
         {
             delete* it;
             it = m_fighters.erase(it);
@@ -147,7 +153,7 @@ void Dungeon::SpawnMob(int nbMob)
             pos.m_y = (std::rand() % m_heightDungeon);
             isOk = true;
 
-            for (Entity* entity : m_fighters)
+            for (Fighter* entity : m_fighters)
             {
                 if (entity->GetPosition() == pos)
                 {
@@ -220,6 +226,18 @@ int Dungeon::GetConsoleWidthSize()
         int width = m_csbi->srWindow.Right - m_csbi->srWindow.Left + 1;
         return width;
     }
+}
+
+void Dungeon::HandleOnAttackAllFighters(Fighter* origin)
+{
+    for (Fighter* fighter : m_fighters) 
+    {
+        if (!dynamic_cast<Hero*>(fighter))
+        {
+            origin->Attack(fighter);
+        }
+    }
+    //RemoveFighters();
 }
 
 char Dungeon::FillBoundsOrDefaultChar(bool xlimit, bool ylimit) 

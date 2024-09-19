@@ -12,6 +12,24 @@ Hero::Hero(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove) :
 	isHisTurn = true;
 }
 
+void Hero::HealPlayer()
+{
+	SetMaxLife(GetMaxLife());
+}
+
+void Hero::UpgradeAttack(int upgrade)
+{
+	SetAttackDamage(GetAttackDamage() + upgrade);
+}
+
+void Hero::AttackAround()
+{
+	for (Fighter* fighter : m_nearPos) 
+	{
+		Attack(fighter);
+	}
+}
+
 void Hero::Move()
 {
 	Vector2 dir = GetDirection();
@@ -55,4 +73,10 @@ void Hero::SetNearPosPlayer(const std::vector<Fighter*>& fighters)
 std::vector<Fighter*>& Hero::GetNearFightPlayer()
 {
 	return m_nearPos;
+}
+
+void Hero::Die()
+{
+	Fighter::Die();
+	//TODO Turn to game over state
 }

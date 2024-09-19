@@ -2,6 +2,8 @@
 #include "Hero.h"
 #include "Fighter.h"
 
+std::function<void(Fighter*)> Mower::OnAttackAllFighter;
+
 Mower::Mower() :
 	Mob::Mob()
 {
@@ -36,4 +38,12 @@ void Mower::ExecuteCapacity()
 {
 	//Capacité spéciale : Se déplace vers le héros, cherchant à se rapprocher pour l'attaquer
 	Move();
+}
+
+void Mower::GetKillRewards()
+{
+	if (OnAttackAllFighter) 
+	{
+		OnAttackAllFighter(this);
+	}
 }

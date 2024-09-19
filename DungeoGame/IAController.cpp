@@ -18,10 +18,13 @@ void IAController::Init(IABrain* iaBrain)
 		std::bind(&IAController::HandleAttackEvent, this);
 	auto moveEventBind =
 		std::bind(&IAController::HandleMoveEvent, this);
+	auto dieEventBind =
+		std::bind(&IAController::HandleOnFighterDieEvent, this);
 
 	m_iaBrain->AttackEvent = attackEventBind;
 	m_iaBrain->CapacityEvent = execCapacityBind;
 	m_iaBrain->MoveEvent = moveEventBind;
+	m_possessedFighter->OnDie = dieEventBind;
 }
 
 void IAController::PossessFighter(Fighter* fighter)
@@ -65,5 +68,13 @@ void IAController::HandleAttackEvent()
 void IAController::HandleMoveEvent()
 {
 	m_possessedFighter->Move();
+}
+
+void IAController::HandleOnFighterDieEvent()
+{
+	delete m_iaBrain;
+	m_iaBrain = nullptr;
+
+	//TODO Remove controllerIA list;
 }
 

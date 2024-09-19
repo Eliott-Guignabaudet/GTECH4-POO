@@ -63,18 +63,20 @@ void PlayerController::HandleInputDirection(Vector2& direction)
 
 void PlayerController::HandleInputFinishTurn()
 {
-	if (Input::IsKeyPush(VK_SPACE))
+	bool finishTurn = false;
+	if (Input::IsKeyPush(VK_SPACE) || Input::IsKeyPush(VK_RETURN))
 	{
-		if (OnFinishTurn)
-		{
-			OnFinishTurn();
-		}
-		//App::GetInstance()->Draw();
+		finishTurn = true;
 	}
+
 	if (Input::IsKeyPush(VK_RETURN))
 	{
-		// TODO : Execute Attack
-		//App::GetInstance()->Draw();
+		m_fighterCasted->AttackAround();
+	}
+
+	if(OnFinishTurn && finishTurn)
+	{
+		OnFinishTurn();
 	}
 }
 

@@ -46,3 +46,9 @@ void Golem::ExecuteCapacity()
 	//Capacité spéciale : Peut résister totalement à l’attaque du héros
 
 }
+
+void Golem::GetKillRewards()
+{
+	int attackDamageGolem = GetAttackDamage();
+	GetHeroTarget()->UpgradeAttack(attackDamageGolem);
+}
