@@ -3,6 +3,7 @@
 #include "App.h"
 #include "Time.h"
 #include "Dungeon.h"
+#include "DungeonParser.h"
 #include "Input.h"
 
 #include "PlayerController.h"
@@ -117,8 +118,9 @@ void App::InitStateMachine()
 
 void App::InitDungeon(int width, int height)
 {
-	m_dungeon->SpawnPlayer(width / 2, height / 2);
-	m_dungeon->SpawnMob();
+	m_dungeon->InitWithData(DungeonParser::ParseDungeon("DungeonMap.txt"));
+	//m_dungeon->SpawnPlayer(width / 2, height / 2);
+	//m_dungeon->SpawnMob();
 }
 
 void App::InitControllers()

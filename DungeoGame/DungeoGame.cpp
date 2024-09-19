@@ -5,6 +5,6 @@
 int main()
 {
     std::cout << "Hello World!\n";
-    //DungeonParser::ParseDungeon("DungeonMap.txt");
+    //DungeonData data = DungeonParser::ParseDungeon("DungeonMap.txt");
     App::GetInstance()->Run();
 }

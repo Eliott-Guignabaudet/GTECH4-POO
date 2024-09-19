@@ -7,6 +7,7 @@
 class Fighter;
 class Hero;
 class Mob;
+struct DungeonData;
 
 class Dungeon
 {
@@ -15,11 +16,11 @@ public:
 
 #pragma region Variables
 
-	CONSOLE_SCREEN_BUFFER_INFO* csbi;
+	CONSOLE_SCREEN_BUFFER_INFO* m_csbi;
 	Hero* m_heroEntity;
 	std::vector<Fighter*> m_fighters;
 
-	std::vector<std::vector<char>> tabChar;
+	std::vector<std::vector<char>> m_tabChar;
 
 	int m_maxWidthDungeon;
 	int m_widthDungeon;
@@ -36,6 +37,7 @@ public:
 	Dungeon();
 	Dungeon(int width, int height);
 
+	void InitWithData(const DungeonData& data);
 	void Clear();
 	void AddFighter(Fighter* entity);
 	void RemoveFighter(Fighter* entity);

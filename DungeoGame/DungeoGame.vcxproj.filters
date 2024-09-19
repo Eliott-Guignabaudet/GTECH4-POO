@@ -61,6 +61,9 @@
     <Filter Include="Fichiers sources\Maths">
       <UniqueIdentifier>{07dbae7f-d714-4054-85da-557cceb0aeee}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{1f655c7b-1678-4796-9530-110dd44d09c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DungeoGame.cpp">
@@ -263,5 +266,10 @@
     <ClInclude Include="DungeonParser.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="DungeonMap.txt">
+      <Filter>Data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

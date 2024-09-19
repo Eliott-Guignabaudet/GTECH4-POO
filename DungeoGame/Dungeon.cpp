@@ -6,6 +6,7 @@
 #include "Golem.h"
 #include "Spectre.h"
 #include "Mower.h"
+#include "DungeonParser.h"
 
 const char CORNER_WALL = '*';
 const char HORIZONTAL_WALL = '-';
@@ -20,7 +21,7 @@ enum class EnumMob {
 
 
 Dungeon::Dungeon() :
-    csbi(nullptr),
+    m_csbi(nullptr),
     m_heroEntity(nullptr),
     m_maxWidthDungeon(0),
     m_widthDungeon(0),
@@ -34,11 +35,59 @@ Dungeon::Dungeon(int width, int height) :
     m_widthDungeon(width),
     m_heightDungeon(height)
 {
-    csbi = new CONSOLE_SCREEN_BUFFER_INFO();
+    m_csbi = new CONSOLE_SCREEN_BUFFER_INFO();
     m_maxWidthDungeon = GetConsoleWidthSize();
     m_fighters = std::vector<Fighter*>();
 
     //std::srand(time(NULL));
+}
+
+void Dungeon::InitWithData(const DungeonData& data)
+{
+    m_widthDungeon = data.Width;
+    m_heightDungeon = data.Height;
+    for (int i = 0; i < data.Entities.size(); i++)
+    {
+        EntityData entityData = data.Entities[i];
+        switch (entityData.Type)
+        {
+        case EntityType::Hero:
+            SpawnPlayer(entityData.Position.m_x, entityData.Position.m_y);
+        }
+    }
+    for (int i = 0; i < data.Entities.size(); i++)
+    {
+        EntityData entityData = data.Entities[i];
+        Mob* mob = nullptr;
+        switch (entityData.Type)
+        {
+        case EntityType::Mower:
+            mob =
+                new Mower(
+                    entityData.Position, 6, 4, 2, 3,m_heroEntity);
+            break;
+        case EntityType::Spectre:
+            mob =
+                new Spectre(entityData.Position, 3, 1, 2, 3, m_heroEntity);
+            break;
+        case EntityType::Golem:
+            mob =
+                new Golem(entityData.Position, 12, 2, 1, 3, m_heroEntity);
+            break;
+        default:
+            break;
+        }
+        if (mob != nullptr)
+        {
+            AddFighter(mob);
+        }
+    }
+
+
+    for (Fighter* fighter : m_fighters)
+    {
+        UpdateMovePossibility(fighter);
+    }
 }
 
 void Dungeon::Clear()
@@ -166,8 +215,8 @@ int Dungeon::GetConsoleWidthSize()
 {
     HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    if (GetConsoleScreenBufferInfo(hStdOut, csbi)) {
-        int width = csbi->srWindow.Right - csbi->srWindow.Left + 1;
+    if (GetConsoleScreenBufferInfo(hStdOut, m_csbi)) {
+        int width = m_csbi->srWindow.Right - m_csbi->srWindow.Left + 1;
         return width;
     }
 }
@@ -204,8 +253,8 @@ void Dungeon::Draw()
 
 void Dungeon::InitTabChar()
 {
-    tabChar = std::vector<std::vector<char>>();
-    tabChar.resize((m_heightDungeon * 2) + 1, std::vector<char>((m_widthDungeon * 2) + 1));
+    m_tabChar = std::vector<std::vector<char>>();
+    m_tabChar.resize((m_heightDungeon * 2) + 1, std::vector<char>((m_widthDungeon * 2) + 1));
 
     for (int i = 0; i <= (m_heightDungeon * 2); i++)
     {
@@ -215,7 +264,7 @@ void Dungeon::InitTabChar()
         {
             bool xIsInLimit = (j == 0 || j == (m_widthDungeon * 2) || j % 2);
 
-            tabChar[i][j] = FillBoundsOrDefaultChar(xIsInLimit, yIsInLimit);
+            m_tabChar[i][j] = FillBoundsOrDefaultChar(xIsInLimit, yIsInLimit);
         }
     }
 }
@@ -231,10 +280,10 @@ void Dungeon::ReplaceEntity()
                 continue;
             }
 
-            tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'm';
+            m_tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'm';
 
             if (fighter == m_heroEntity) {
-                tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'a';
+                m_tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'a';
             }
         }
     }
@@ -242,13 +291,13 @@ void Dungeon::ReplaceEntity()
     for (Fighter* fighter : m_fighters)
     {
         Maths::Vector2 vect = fighter->GetPosition();
-        tabChar[vect.m_y * 2][vect.m_x * 2] = fighter->GetSprite();
+        m_tabChar[vect.m_y * 2][vect.m_x * 2] = fighter->GetSprite();
     }
 }
 
 void Dungeon::DrawTabChar()
 {
-    for (std::vector<char> tabXChar : tabChar)
+    for (std::vector<char> tabXChar : m_tabChar)
     {
         DrawOffsetRight();
         for (char Ychar : tabXChar)
