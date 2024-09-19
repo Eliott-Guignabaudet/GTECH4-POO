@@ -23,6 +23,8 @@ public:
 	void Run();
 	void Draw();
 
+	void RemoveIAController(IAController* iaController);
+
 #pragma region Getters
 
 	PlayerController* GetPlayerController();

@@ -30,9 +30,18 @@ void IATurnState::Execute()
 		}
 		return;
 	}
+	bool isIndexOutOfVector = m_currentIAIndex >= m_currentIAs.size();
+
+	if (!isIndexOutOfVector && (m_currentIAs[m_currentIAIndex] == nullptr
+		|| !m_currentIAs[m_currentIAIndex]->IsValid()))
+	{
+		App::GetInstance()->RemoveIAController(m_currentIAs[m_currentIAIndex]);
+		m_currentIAIndex++;
+		m_elapsedTimeBeforeLastExecution = 0.f;
+		return;
+	}
 	
-	if (m_currentIAIndex < m_currentIAs.size() && 
-		m_elapsedTimeBeforeLastExecution >= TIME_BETWEEN_IA_EXECUTION)
+	if (!isIndexOutOfVector && m_elapsedTimeBeforeLastExecution >= TIME_BETWEEN_IA_EXECUTION)
 	{
 		m_currentIAs[m_currentIAIndex]->Execute();
 		m_currentIAIndex++;

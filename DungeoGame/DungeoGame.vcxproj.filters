@@ -64,6 +64,12 @@
     <Filter Include="Data">
       <UniqueIdentifier>{1f655c7b-1678-4796-9530-110dd44d09c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers sources\Gameplay\IA\Brains">
+      <UniqueIdentifier>{6f8564a0-fd2a-4b16-a6cb-72f554ab3c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers d%27en-tête\Gameplay\IA\Brains">
+      <UniqueIdentifier>{d65fe92b-7f7b-4977-a2eb-321d2c6b0211}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DungeoGame.cpp">
@@ -144,23 +150,23 @@
     <ClCompile Include="Time.cpp">
       <Filter>Fichiers sources\App</Filter>
     </ClCompile>
-    <ClCompile Include="IABrain.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="IAGolemBrain.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="IAMowerBrain.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="IASpectreBrain.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\App</Filter>
     </ClCompile>
     <ClCompile Include="DungeonParser.cpp">
-      <Filter>Fichiers sources</Filter>
+      <Filter>Fichiers sources\App</Filter>
+    </ClCompile>
+    <ClCompile Include="IABrain.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\Brains</Filter>
+    </ClCompile>
+    <ClCompile Include="IAGolemBrain.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\Brains</Filter>
+    </ClCompile>
+    <ClCompile Include="IAMowerBrain.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\Brains</Filter>
+    </ClCompile>
+    <ClCompile Include="IASpectreBrain.cpp">
+      <Filter>Fichiers sources\Gameplay\IA\Brains</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -242,29 +248,29 @@
     <ClCompile Include="Time.cpp">
       <Filter>Fichiers d%27en-tête\App</Filter>
     </ClCompile>
-    <ClInclude Include="IABrain.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="IAGolemBrain.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="IAMowerBrain.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="IASpectreBrain.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="Time.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\App</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Fichiers d%27en-tête\App</Filter>
     </ClInclude>
     <ClInclude Include="DungeonParser.h">
-      <Filter>Fichiers d%27en-tête</Filter>
+      <Filter>Fichiers d%27en-tête\App</Filter>
+    </ClInclude>
+    <ClInclude Include="IABrain.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\Brains</Filter>
+    </ClInclude>
+    <ClInclude Include="IAGolemBrain.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\Brains</Filter>
+    </ClInclude>
+    <ClInclude Include="IAMowerBrain.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\Brains</Filter>
+    </ClInclude>
+    <ClInclude Include="IASpectreBrain.h">
+      <Filter>Fichiers d%27en-tête\Gameplay\IA\Brains</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

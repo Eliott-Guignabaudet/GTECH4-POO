@@ -49,6 +49,11 @@ Mob* IAController::GetMobCasted()
 	return dynamic_cast<Mob*>(m_possessedFighter);
 }
 
+bool IAController::IsValid()
+{
+	return m_possessedFighter!= nullptr && m_iaBrain != nullptr;
+}
+
 void IAController::HandleExecuteCapacityEvent()
 {
 	if (Mob* mob = GetMobCasted())
@@ -73,6 +78,7 @@ void IAController::HandleMoveEvent()
 void IAController::HandleOnFighterDieEvent()
 {
 	delete m_iaBrain;
+	m_possessedFighter = nullptr;
 	m_iaBrain = nullptr;
 
 	//TODO Remove controllerIA list;

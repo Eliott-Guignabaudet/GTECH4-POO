@@ -14,7 +14,7 @@ public:
     virtual void PossessFighter(Fighter* fighter) override;
     void Execute();
     Mob* GetMobCasted();
-
+    bool IsValid();
 
     void HandleExecuteCapacityEvent();
     void HandleAttackEvent();

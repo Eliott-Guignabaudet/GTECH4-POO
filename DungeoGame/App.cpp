@@ -184,7 +184,7 @@ void App::Update()
 
 void App::UpdateAllFighterPossibilities()
 {
-	//m_dungeon->RemoveFighters();
+	m_dungeon->RemoveFighters();
 	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
 	for (int i = 0; i < fighters.size(); i++)
 	{
@@ -205,17 +205,23 @@ void App::Draw()
 	{
 		std::cout << "IA Turn\n";
 	}
-	// TODO: Draw Function
-	//		 Draw Title
-	//		 Draw CurrentTurn
-	//		 Draw Dungeon
+
 	m_dungeon->Draw();
-	//		 Draw Player Actions
-	//		 Draw Last events
 
 	std::cout 
 		<< Time::GetInstance()->GetElapsedTime() 
 		<< std::endl;
+}
+
+void App::RemoveIAController(IAController* iaController)
+{
+	int iaIndex = 0;
+	for (int i = 0; i < m_iasControllers.size() && m_iasControllers[iaIndex] != iaController; i++)
+	{
+		iaIndex = i;
+	}
+	m_iasControllers.erase(m_iasControllers.begin() + iaIndex);
+	delete iaController;
 }
 
 #pragma endregion
