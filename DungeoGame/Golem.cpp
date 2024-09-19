@@ -21,14 +21,22 @@ Vector2 Golem::GetNewPosition()
 
 	std::vector<Vector2> possibilitiesMoved = GetMovePosPossibility();
 
+	std::vector<Vector2> listPos = std::vector<Vector2>();
+
 	if (dist - 1 <= GetSizeMove()) 
 	{
 		for (Vector2 posMoved : possibilitiesMoved)
 		{
 			if (Vector2::GetDistance(posMoved, posPlayer) == 1) 
 			{
-				return posMoved;
+				listPos.push_back(posMoved);
 			}
+		}
+
+		if (!listPos.empty())
+		{
+			int id = std::rand() % listPos.size();
+			return listPos[id];
 		}
 	}
 
