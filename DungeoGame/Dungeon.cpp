@@ -190,24 +190,18 @@ char Dungeon::FillBoundsOrDefaultChar(bool xlimit, bool ylimit)
 
 void Dungeon::Draw()
 {
-    //Init Tab Char
     m_maxWidthDungeon = GetConsoleWidthSize();
 
-    std::vector<std::vector<char>> tabChar = std::vector<std::vector<char>>();
-    InitTabChar(&tabChar);
-
-    // Replace Char by Entity
-    ReplaceEntity(&tabChar);
-
-    //Draw
-    DrawTabChar(&tabChar);
-
+    InitTabChar();
+    ReplaceEntity();
+    DrawTabChar();
     DrawStatistics();
 }
 
-void Dungeon::InitTabChar(std::vector<std::vector<char>>* tabChar)
+void Dungeon::InitTabChar()
 {
-    tabChar->resize((m_heightDungeon * 2) + 1, std::vector<char>((m_widthDungeon * 2) + 1));
+    tabChar = std::vector<std::vector<char>>();
+    tabChar.resize((m_heightDungeon * 2) + 1, std::vector<char>((m_widthDungeon * 2) + 1));
 
     for (int i = 0; i <= (m_heightDungeon * 2); i++)
     {
@@ -217,12 +211,12 @@ void Dungeon::InitTabChar(std::vector<std::vector<char>>* tabChar)
         {
             bool xIsInLimit = (j == 0 || j == (m_widthDungeon * 2) || j % 2);
 
-            (*tabChar)[i][j] = FillBoundsOrDefaultChar(xIsInLimit, yIsInLimit);
+            tabChar[i][j] = FillBoundsOrDefaultChar(xIsInLimit, yIsInLimit);
         }
     }
 }
 
-void Dungeon::ReplaceEntity(std::vector<std::vector<char>>* tabChar)
+void Dungeon::ReplaceEntity()
 {
     for (Fighter* fighter : m_fighters)
     {
@@ -233,10 +227,10 @@ void Dungeon::ReplaceEntity(std::vector<std::vector<char>>* tabChar)
                 continue;
             }
 
-            (*tabChar)[posPossible.m_y * 2][posPossible.m_x * 2] = 'm';
+            tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'm';
 
             if (fighter == m_heroEntity) {
-                (*tabChar)[posPossible.m_y * 2][posPossible.m_x * 2] = 'a';
+                tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'a';
             }
         }
     }
@@ -244,13 +238,13 @@ void Dungeon::ReplaceEntity(std::vector<std::vector<char>>* tabChar)
     for (Fighter* fighter : m_fighters)
     {
         Maths::Vector2 vect = fighter->GetPosition();
-        (*tabChar)[vect.m_y * 2][vect.m_x * 2] = fighter->GetSprite();
+        tabChar[vect.m_y * 2][vect.m_x * 2] = fighter->GetSprite();
     }
 }
 
-void Dungeon::DrawTabChar(std::vector<std::vector<char>>* tabChar)
+void Dungeon::DrawTabChar()
 {
-    for (std::vector<char> tabXChar : *tabChar)
+    for (std::vector<char> tabXChar : tabChar)
     {
         DrawOffsetRight();
         for (char Ychar : tabXChar)

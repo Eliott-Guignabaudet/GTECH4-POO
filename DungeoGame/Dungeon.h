@@ -19,6 +19,8 @@ public:
 	Hero* m_heroEntity;
 	std::vector<Fighter*> m_fighters;
 
+	std::vector<std::vector<char>> tabChar;
+
 	int m_maxWidthDungeon;
 	int m_widthDungeon;
 	int m_heightDungeon;
@@ -47,9 +49,9 @@ public:
 	char FillBoundsOrDefaultChar(bool xlimit, bool ylimit);
 	void Draw();
 
-	void InitTabChar(std::vector<std::vector<char>>* tabChar);
-	void ReplaceEntity(std::vector<std::vector<char>>* tabChar);
-	void DrawTabChar(std::vector<std::vector<char>>* tabChar);
+	void InitTabChar();
+	void ReplaceEntity();
+	void DrawTabChar();
 
 	void DrawStatistics();
 	void DrawOffset(int offset = 0);
