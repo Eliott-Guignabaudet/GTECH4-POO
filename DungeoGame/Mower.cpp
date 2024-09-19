@@ -16,7 +16,7 @@ Mower::Mower(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 
 
 
-Vector2 Mower::GetNewPosition()
+Vector2 Mower::GetNewPosition(int sizeCanMove)
 {
 	Vector2 posMower = GetPosition();
 	Vector2 posPlayer = GetHeroTarget()->GetPosition();
@@ -24,47 +24,12 @@ Vector2 Mower::GetNewPosition()
 	int dist = Vector2::GetDistance(posMower, posPlayer);
 	std::vector<Vector2> listPos = std::vector<Vector2>();
 
-	if (dist - 1 <= GetSizeMove())
-	{
-		for (Vector2 pos : GetMovePosPossibility())
-		{
-			if (Vector2::GetDistance(pos, posPlayer) == 1)
-			{
-				listPos.push_back(pos);
-			}
-		}
-
-		if (!listPos.empty()) 
-		{
-			int id = std::rand() % listPos.size();
-			return listPos[id];
-		}
+	Vector2 nearPlayer = GoNearPlayer(sizeCanMove);
+	if (nearPlayer != GetPosition()) {
+		return nearPlayer;
 	}
 
-	int minDist = INT_MAX;
-
-	for (Vector2 pos : GetMovePosPossibility())
-	{
-		int dist = Vector2::GetDistance(pos, posPlayer);
-		if (minDist > dist)
-		{
-			minDist = dist;
-			listPos.clear();
-			listPos.push_back(pos);
-		}
-		else if(minDist == dist)
-		{
-			listPos.push_back(pos);
-		}
-	}
-
-	if (!listPos.empty())
-	{
-		int id = std::rand() % listPos.size();
-		return listPos[id];
-	}
-
-	return posMower;
+	return GoToPlayer(sizeCanMove);
 }
 
 void Mower::ExecuteCapacity()

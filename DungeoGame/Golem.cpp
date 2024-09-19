@@ -14,8 +14,12 @@ Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 }
 
 
-Vector2 Golem::GetNewPosition()
+Vector2 Golem::GetNewPosition(int sizeCanMove)
 {
+	if (sizeCanMove == 0)
+	{
+		sizeCanMove = GetSizeMove();
+	}
 	Vector2 posPlayer = GetHeroTarget()->GetPosition();
 	int dist = Vector2::GetDistance(GetPosition(), posPlayer);
 
@@ -23,21 +27,14 @@ Vector2 Golem::GetNewPosition()
 
 	std::vector<Vector2> listPos = std::vector<Vector2>();
 
-	if (dist - 1 <= GetSizeMove()) 
+	if (dist - 1 <= GetSizeMove())
 	{
-		for (Vector2 posMoved : possibilitiesMoved)
-		{
-			if (Vector2::GetDistance(posMoved, posPlayer) == 1) 
-			{
-				listPos.push_back(posMoved);
-			}
+		Vector2 nearPlayer = GoNearPlayer(sizeCanMove);
+		if (nearPlayer != GetPosition()) {
+			return nearPlayer;
 		}
 
-		if (!listPos.empty())
-		{
-			int id = std::rand() % listPos.size();
-			return listPos[id];
-		}
+		return GoToPlayer(sizeCanMove);
 	}
 
 	int id = std::rand() % possibilitiesMoved.size();

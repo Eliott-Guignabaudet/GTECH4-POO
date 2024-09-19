@@ -10,6 +10,7 @@
 const char CORNER_WALL = '*';
 const char HORIZONTAL_WALL = '-';
 const char VERTICAL_WALL = '|';
+const int DRAW_OFFSET = 2;
 
 enum class EnumMob {
     Golem = 0,
@@ -93,8 +94,8 @@ void Dungeon::SpawnMob(int nbMob)
 
         while (!isOk) 
         {
-            pos.m_x = (std::rand() % (m_widthDungeon - 1)) + 1;
-            pos.m_y = (std::rand() % (m_heightDungeon - 1)) + 1;
+            pos.m_x = (std::rand() % m_widthDungeon);
+            pos.m_y = (std::rand() % m_heightDungeon);
             isOk = true;
 
             for (Entity* entity : m_fighters)
@@ -205,19 +206,19 @@ void Dungeon::Draw()
 void Dungeon::InitTabChar()
 {
     tabChar = std::vector<std::vector<char>>();
-    tabChar.resize((m_heightDungeon * 2) + 1, std::vector<char>((m_widthDungeon * 2) + 1));
+    tabChar.resize(m_heightDungeon + 1, std::vector<char>(m_widthDungeon + 1, (' ')));
 
-    for (int i = 0; i <= (m_heightDungeon * 2); i++)
-    {
-        bool yIsInLimit = (i == 0 || i == (m_heightDungeon * 2) || i % 2);
+    //for (int i = 0; i <= m_heightDungeon; i++)
+    //{
+    //    bool yIsInLimit = (i == 0 || i == m_heightDungeon);
 
-        for (int j = 0; j <= (m_widthDungeon * 2); j++)
-        {
-            bool xIsInLimit = (j == 0 || j == (m_widthDungeon * 2) || j % 2);
+    //    for (int j = 0; j <= m_widthDungeon; j++)
+    //    {
+    //        bool xIsInLimit = (j == 0 || j == m_widthDungeon);
 
-            tabChar[i][j] = FillBoundsOrDefaultChar(xIsInLimit, yIsInLimit);
-        }
-    }
+    //        tabChar[i][j] = FillBoundsOrDefaultChar(xIsInLimit, yIsInLimit);
+    //    }
+    //}
 }
 
 void Dungeon::ReplaceEntity()
@@ -231,10 +232,10 @@ void Dungeon::ReplaceEntity()
                 continue;
             }
 
-            tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'm';
+            tabChar[posPossible.m_y][posPossible.m_x] = 'm';
 
             if (fighter == m_heroEntity) {
-                tabChar[posPossible.m_y * 2][posPossible.m_x * 2] = 'a';
+                tabChar[posPossible.m_y][posPossible.m_x] = 'a';
             }
         }
     }
@@ -242,45 +243,60 @@ void Dungeon::ReplaceEntity()
     for (Fighter* fighter : m_fighters)
     {
         Maths::Vector2 vect = fighter->GetPosition();
-        tabChar[vect.m_y * 2][vect.m_x * 2] = fighter->GetSprite();
+        tabChar[vect.m_y][vect.m_x] = fighter->GetSprite();
     }
 }
 
 void Dungeon::DrawTabChar()
 {
-    for (std::vector<char> tabXChar : tabChar)
+    for (int i = 0; i <= (m_heightDungeon * DRAW_OFFSET); i++)
     {
         DrawOffsetRight();
-        for (char Ychar : tabXChar)
+
+        for (int j = 0; j <= (m_widthDungeon * DRAW_OFFSET); j++)
         {
-            std::string prefix = "";
-            std::string suffix = "\033[0m";
-
-            if (Ychar == 'G' || Ychar == 'S' || Ychar == 'F')  // Mob
+            if (i % DRAW_OFFSET == 0 || j % DRAW_OFFSET == 0)
             {
-                prefix = "\033[40;31m"; // Fond Noir (40), Texte Rouge (31)
+                std::cout << FillBoundsOrDefaultChar(j % DRAW_OFFSET == 0, i % DRAW_OFFSET == 0);
+                continue;
             }
-
-            else if (Ychar == 'm') // Possibility Mob move
+            else if (i % DRAW_OFFSET == (DRAW_OFFSET / 2) && j % DRAW_OFFSET == (DRAW_OFFSET / 2))
             {
-                Ychar = ' ';
-                prefix = "\033[41m"; // Fond Rouge (41), Texte par défaut (blanc)
-            }
+                char currentChar = tabChar[i / DRAW_OFFSET][j / DRAW_OFFSET];
+                std::string prefix = "";
+                std::string suffix = "\033[0m";
 
-            else if (Ychar == '@') // Player
+                if (currentChar == 'G' || currentChar == 'S' || currentChar == 'F')  // Mob
+                {
+                    prefix = "\033[40;31m"; // Fond Noir (40), Texte Rouge (31)
+                }
+
+                else if (currentChar == 'm') // Possibility Mob move
+                {
+                    currentChar = ' ';
+                    prefix = "\033[41m"; // Fond Rouge (41), Texte par défaut (blanc)
+                }
+
+                else if (currentChar == '@') // Player
+                {
+                    prefix = "\033[40;36m"; // Fond Noir (40), Texte Cyan (36)
+                }
+
+                else if (currentChar == 'a') // Possibility Player move
+                {
+                    currentChar = ' ';
+                    prefix = "\033[42m"; // Fond Vert (42), Texte par défaut (blanc)
+                }
+
+                std::string txt = prefix + currentChar + suffix;
+
+                std::cout << txt;
+            }
+            else 
             {
-                prefix = "\033[40;36m"; // Fond Noir (40), Texte Cyan (36)
+                std::cout << ' ';
             }
-
-            else if (Ychar == 'a') // Possibility Player move
-            {
-                Ychar = ' ';
-                prefix = "\033[42m"; // Fond Vert (42), Texte par défaut (blanc)
-            }
-
-            std::string txt = prefix + Ychar + suffix;
-
-            std::cout << txt;
+            
         }
         std::cout << '\n';
     }
@@ -303,7 +319,7 @@ void Dungeon::DrawStatistics()
 void Dungeon::DrawOffset(int offset)
 {
     if (offset == 0) {
-        offset = (m_maxWidthDungeon - (m_widthDungeon * 2)) / 2;
+        offset = (m_maxWidthDungeon - (m_widthDungeon * DRAW_OFFSET)) / 2;
     }
     std::cout << std::setw(offset - 1);
 }
@@ -323,11 +339,11 @@ void Dungeon::DrawOffsetLeft(int offset)
 void Dungeon::DrawLineTitle(char Char, std::string message)
 {
     DrawOffsetRight();
-    int marge = (m_widthDungeon * 2) / 10;
+    int marge = (m_widthDungeon * DRAW_OFFSET) / 10;
 
     std::cout << Char;
     DrawOffsetRight(marge);
-    DrawOffsetLeft((m_widthDungeon * 2) - marge);
+    DrawOffsetLeft((m_widthDungeon * DRAW_OFFSET) - marge);
     std::cout << message << Char;
 
     std::cout << "\n";
@@ -336,7 +352,7 @@ void Dungeon::DrawLineTitle(char Char, std::string message)
 void Dungeon::DrawLineElement(char Char, std::string message1, std::string message2)
 {
     DrawOffsetRight();
-    int marge = (m_widthDungeon * 2) / 5;
+    int marge = (m_widthDungeon * DRAW_OFFSET) / 5;
 
     std::cout << Char;
     DrawOffsetRight(marge);
@@ -352,7 +368,7 @@ void Dungeon::DrawLineWithNothing(char Char)
     DrawOffsetRight();
 
     std::cout << Char;
-    DrawOffsetRight(m_widthDungeon * 2);
+    DrawOffsetRight(m_widthDungeon * DRAW_OFFSET);
     std::cout << Char;
 
     std::cout << "\n";
@@ -362,7 +378,7 @@ void Dungeon::DrawLineWithAnything(char Char)
 {
     DrawOffsetRight();
 
-    for (int i = 0; i <= m_widthDungeon * 2; i++)
+    for (int i = 0; i <= m_widthDungeon * DRAW_OFFSET; i++)
     {
         std::cout << Char;
     }
