@@ -37,10 +37,12 @@
 
 #pragma endregion
 
-#pragma region Singleton
+
+const int MAX_ROOM = 10;
 
 using namespace std::placeholders;
 
+#pragma region Singleton
 App* App::s_instance = nullptr;
 
 App::App() :
@@ -68,7 +70,7 @@ void App::Run()
 	Init();
 	RegisterForEvents();
 	Draw();
-	while (true)
+	while (!m_isGameFinish)
 	{
 		if (Time::GetInstance()->UpdateTime())
 		{
@@ -76,7 +78,9 @@ void App::Run()
 			Update(); 
 		}
 	}
-	
+	Sleep(1000);
+	system("cls");
+	std::cout << "Bravo" << std::endl;
 }
 
 #pragma region Lifecycle
@@ -227,6 +231,11 @@ void App::RemoveIAController(IAController* iaController)
 	delete iaController;
 	if (m_iasControllers.size() == 0)
 	{
+		if (m_dungeon->m_dungeonRoom >= MAX_ROOM)
+		{
+			m_isGameFinish = true;
+		}
+		m_dungeon->m_dungeonRoom++;
 		m_dungeon->SpawnMob();
 		InitControllers();
 	}
@@ -293,6 +302,7 @@ void App::ResetDungeon()
 	m_iasControllers.clear();
 	InitDungeon(20, 10);
 	InitControllers();
+	m_dungeon->m_dungeonRoom = 1;
 }
 
 

@@ -25,6 +25,7 @@ public:
 	int m_maxWidthDungeon;
 	int m_widthDungeon;
 	int m_heightDungeon;
+	int m_dungeonRoom;
 
 #pragma endregion
 

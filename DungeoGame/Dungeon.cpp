@@ -28,7 +28,8 @@ Dungeon::Dungeon() :
     m_heroEntity(nullptr),
     m_maxWidthDungeon(0),
     m_widthDungeon(0),
-    m_heightDungeon(0)
+    m_heightDungeon(0),
+    m_dungeonRoom(1)
 {
 
 }
@@ -36,7 +37,8 @@ Dungeon::Dungeon() :
 Dungeon::Dungeon(int width, int height) :
     m_heroEntity(nullptr),
     m_widthDungeon(width),
-    m_heightDungeon(height)
+    m_heightDungeon(height),
+    m_dungeonRoom(1)
 {
     m_csbi = new CONSOLE_SCREEN_BUFFER_INFO();
     m_maxWidthDungeon = GetConsoleWidthSize();

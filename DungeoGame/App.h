@@ -36,7 +36,10 @@ private:
 	App();
 	static App* s_instance;
 
+
 #pragma region Private Attributes
+
+	bool m_isGameFinish;
 
 	Dungeon* m_dungeon;
 	StateMachine* m_gameStateMachine;
