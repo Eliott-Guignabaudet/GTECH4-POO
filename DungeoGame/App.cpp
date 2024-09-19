@@ -252,6 +252,7 @@ void App::HandleOnPlayerFinishTurn()
 		m_gameStateMachine->GetState<IATurnState>();
 	m_gameStateMachine->SwitchToState(iaTurnState);
 	UpdateAllFighterPossibilities();
+	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
 }
 
@@ -276,10 +277,7 @@ void App::HandleOnIAControllerFinish()
 
 void App::HandleOnRedrawFighter(Fighter* fighter)
 {
-	if (Hero* hero = dynamic_cast<Hero*>(fighter))
-	{
-		m_dungeon->UpdateNearFighterPlayer();
-	}
+	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
 }
 #pragma endregion

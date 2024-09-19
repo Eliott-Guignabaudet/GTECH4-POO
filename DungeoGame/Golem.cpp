@@ -21,10 +21,6 @@ Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 
 Vector2 Golem::GetNewPosition(int sizeCanMove)
 {
-	if (sizeCanMove == 0)
-	{
-		sizeCanMove = GetSizeMove();
-	}
 	Vector2 posPlayer = GetHeroTarget()->GetPosition();
 	int dist = Vector2::GetDistance(GetPosition(), posPlayer);
 

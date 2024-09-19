@@ -20,7 +20,8 @@ public:
 	Hero* m_heroEntity;
 	std::vector<Fighter*> m_fighters;
 
-	std::vector<std::vector<char>> m_tabChar;
+	std::vector<std::vector<char>> m_tabCharGame;
+	std::vector<std::string> m_tabStringStatistics;
 
 	int m_maxWidthDungeon;
 	int m_widthDungeon;
@@ -54,18 +55,16 @@ public:
 	char FillBoundsOrDefaultChar(bool xlimit, bool ylimit);
 	void Draw();
 
+	void InitStatistics();
 	void InitTabChar();
 	void ReplaceEntity();
 	void DrawTabChar();
 
-	void DrawStatistics();
-	void DrawOffset(int offset = 0);
-	void DrawOffsetRight(int offset = 0);
-	void DrawOffsetLeft(int offset = 0);
-	void DrawLineTitle(char Char, std::string message);
-	void DrawLineElement(char Char, std::string message1, std::string message2);
-	void DrawLineWithNothing(char Char);
-	void DrawLineWithAnything( char Char);
+	std::string DrawOffset(int offset = 0);
+	std::string DrawLineTitle(char Char, std::string message);
+	std::string DrawLineElement(char Char, std::string message1, std::string message2);
+	std::string DrawLineWithNothing(char Char);
+	std::string DrawLineWithAnything(char Char);
 
 #pragma endregion
 
