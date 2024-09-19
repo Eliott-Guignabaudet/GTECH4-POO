@@ -12,6 +12,7 @@ public:
     virtual void PossessFighter(Fighter* fighter) override;
     virtual void Update() override;
     std::function<void()> OnFinishTurn;
+    bool OnEnterPlayer;
 private:
     void HandleInput();
     void HandleInputDirection(Vector2& direction);

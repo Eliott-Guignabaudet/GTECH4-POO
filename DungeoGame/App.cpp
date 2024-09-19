@@ -71,8 +71,8 @@ void App::Run()
 
 void App::Init()
 {
-	int width = 119;
-	int height = 20;
+	int width = 20;
+	int height = 10;
 	m_dungeon = new Dungeon(width, height);
 
 
@@ -153,9 +153,9 @@ void App::RegisterForEvents()
 		m_gameStateMachine->GetState<IATurnState>();
 	iaTurnState->OnFinishIATurn = onIaTurnFinishBind;
 
-	auto onFighterMovedBind =
-		std::bind(&App::HandleOnFighterMoved, this, _1);
-	Fighter::OnFighterMoved = onFighterMovedBind;
+	auto onRedrawFighterBind =
+		std::bind(&App::HandleOnRedrawFighter, this, _1);
+	Fighter::OnRedrawMoveFighter = onRedrawFighterBind;
 }
 
 void App::Update()
@@ -169,10 +169,7 @@ void App::UpdateAllFighterPossibilities()
 	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
 	for (int i = 0; i < fighters.size(); i++)
 	{
-		fighters[i]->UpdateMovePossibility(
-			m_dungeon->m_widthDungeon,
-			m_dungeon->m_heightDungeon,
-			&m_dungeon->m_fighters);
+		m_dungeon->UpdateMovePossibility(fighters[i]);
 	}
 }
 
@@ -208,6 +205,7 @@ void App::Draw()
 
 void App::HandleOnPlayerFinishTurn()
 {
+	m_dungeon->m_heroEntity->isHisTurn = false;
 	State* iaTurnState =
 		m_gameStateMachine->GetState<IATurnState>();
 	m_gameStateMachine->SwitchToState(iaTurnState);
@@ -224,7 +222,7 @@ void App::HandleOnFinishIATurn()
 	Draw();
 }
 
-void App::HandleOnFighterMoved(Fighter* fighter)
+void App::HandleOnRedrawFighter(Fighter* fighter)
 {
 	Draw();
 }

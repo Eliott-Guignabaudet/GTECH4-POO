@@ -12,8 +12,8 @@ void IASpectreBrain::Execute(Mob* possessedMob)
 		CapacityEvent();
 	}
 
-	Vector2 mobPos = *possessedMob->GetPosition();
-	Vector2 playerPos = *possessedMob->GetHeroTarget()->GetPosition();
+	Vector2 mobPos = possessedMob->GetPosition();
+	Vector2 playerPos = possessedMob->GetHeroTarget()->GetPosition();
 
 	int distance = Vector2::GetDistance(mobPos, playerPos);
 	if (distance == 1)

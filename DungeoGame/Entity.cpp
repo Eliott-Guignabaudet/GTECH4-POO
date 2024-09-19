@@ -1,14 +1,15 @@
 #include "Entity.h"
 #include <iostream>
 
+
 #pragma region Getteur / Setteur
 
-void Entity::SetPosition(Maths::Vector2* pos)
+void Entity::SetPosition(Vector2 pos)
 {
 	m_pos = pos;
 }
 
-Maths::Vector2* Entity::GetPosition()
+Vector2& Entity::GetPosition()
 {
 	return m_pos;
 }
@@ -28,13 +29,13 @@ char Entity::GetSprite()
 #pragma region Class function
 
 Entity::Entity() :
-	m_pos(nullptr),
+	m_pos(0,0),
 	m_sprite(' ')
 {
 
 }
 
-Entity::Entity(Maths::Vector2* pos, char sprite) :
+Entity::Entity(Vector2 pos, char sprite) :
 	m_pos(pos),
 	m_sprite(sprite)
 {

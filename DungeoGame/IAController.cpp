@@ -22,8 +22,6 @@ void IAController::Init(IABrain* iaBrain)
 	m_iaBrain->AttackEvent = attackEventBind;
 	m_iaBrain->CapacityEvent = execCapacityBind;
 	m_iaBrain->MoveEvent = moveEventBind;
-
-
 }
 
 void IAController::PossessFighter(Fighter* fighter)
@@ -38,7 +36,9 @@ void IAController::PossessFighter(Fighter* fighter)
 
 void IAController::Execute()
 {
+	GetMobCasted()->isHisTurn = true;
 	m_iaBrain->Execute(GetMobCasted());
+	GetMobCasted()->isHisTurn = false;
 }
 
 Mob* IAController::GetMobCasted()

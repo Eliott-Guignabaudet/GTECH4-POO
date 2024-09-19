@@ -3,7 +3,7 @@
 #include "IAController.h"
 #include "Time.h"
 
-const float TIME_BETWEEN_IA_EXECUTION = 0.2f;
+const float TIME_BETWEEN_IA_EXECUTION = 0.5f;
 
 void IATurnState::OnEnter()
 {

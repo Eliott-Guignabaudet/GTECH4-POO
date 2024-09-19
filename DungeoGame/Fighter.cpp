@@ -1,15 +1,15 @@
 #include "Fighter.h"
 
-std::function<void(Fighter*)> Fighter::OnFighterMoved;
+std::function<void(Fighter*)> Fighter::OnRedrawMoveFighter;
 
 #pragma region Getteur / Setteur
 
-void Fighter::SetDirection(Maths::Vector2& dir)
+void Fighter::SetDirection(Vector2& dir)
 {
 	m_dir = dir;
 }
 
-Maths::Vector2& Fighter::GetDirection()
+Vector2& Fighter::GetDirection()
 {
 	return m_dir;
 }
@@ -54,20 +54,22 @@ Fighter::Fighter() :
 	m_maxLife(0),
 	m_life(0),
 	m_attackDamage(0),
-	m_sizeCanMove(0)
+	m_sizeCanMove(0),
+	isHisTurn(false)
 {
 
 }
 
-Fighter::Fighter(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove) :
+Fighter::Fighter(Vector2 pos, char sprite, int maxLife, int attackDamage, int sizeCanMove) :
 	Entity::Entity(pos, sprite),
 	m_dir(0, 0),
 	m_maxLife(maxLife),
 	m_life(maxLife),
 	m_attackDamage(attackDamage),
-	m_sizeCanMove(sizeCanMove)
+	m_sizeCanMove(sizeCanMove),
+	isHisTurn(false)
 {
-	m_listPosPossible = std::vector<Maths::Vector2>();
+	m_listPosPossibilities = std::vector<Vector2>();
 }
 
 void Fighter::SetMovePosPossibility(int xLimit, int Ylimit)
@@ -78,61 +80,74 @@ void Fighter::SetMovePosPossibility(int xLimit, int Ylimit)
 		nb = nb + (i * 4);
 	}
 
-	m_listPosPossible.clear();
+	m_listPosPossibilities.clear();
 
-	for (int i = m_pos->m_x - m_sizeCanMove; i <= m_pos->m_x + m_sizeCanMove; i++)
+	for (int i = m_pos.m_x - m_sizeCanMove; i <= m_pos.m_x + m_sizeCanMove; i++)
 	{
 		if (i <= 0 || i >= xLimit) {
 			continue;
 		}
 
-		for (int j = m_pos->m_y - m_sizeCanMove; j <= m_pos->m_y + m_sizeCanMove; j++)
+		for (int j = m_pos.m_y - m_sizeCanMove; j <= m_pos.m_y + m_sizeCanMove; j++)
 		{
 			if (j <= 0 || j >= Ylimit) {
 				continue;
 			}
 
-			int offsetX = abs(m_pos->m_x - i);
-			int offsetY = abs(m_pos->m_y - j);
+			int offsetX = abs(m_pos.m_x - i);
+			int offsetY = abs(m_pos.m_y - j);
 
 			if (offsetX + offsetY <= m_sizeCanMove) 
 			{
-				m_listPosPossible.push_back(Maths::Vector2(i, j));
+				m_listPosPossibilities.push_back(Vector2(i, j));
 			}
 			
 		}
 	}
 }
 
-std::vector<Maths::Vector2> Fighter::GetMovePosPossibility()
+std::vector<Vector2> Fighter::GetMovePosPossibility()
 {
-	return m_listPosPossible;
+	return m_listPosPossibilities;
+}
+
+void Fighter::SetRemoveFighterPosPossibility(std::vector<Fighter*>* fighters)
+{
+	for (int i = 0; i < m_listPosPossibilities.size();)
+	{
+		bool positionOccupied = false;
+
+		for (Entity* otherFighter : *fighters)
+		{
+			if (otherFighter->GetPosition() == m_listPosPossibilities[i] && GetPosition() != m_listPosPossibilities[i])
+			{
+				positionOccupied = true;
+				break;
+			}
+		}
+
+		if (positionOccupied)
+		{
+			m_listPosPossibilities.erase(m_listPosPossibilities.begin() + i);
+		}
+		else
+		{
+			++i;
+		}
+	}
 }
 
 
 void Fighter::Move()
 {
-	int newX = m_pos->m_x + m_dir.m_x;
-	int newY = m_pos->m_y + m_dir.m_y;
-
-	for (Maths::Vector2 posPossible : m_listPosPossible)
-	{
-		if (newX == posPossible.m_x && newY == posPossible.m_y)
-		{
-			m_pos->m_x = newX;
-			m_pos->m_y = newY;
-			OnMove();
-			return;
-		}
-	}
-
+	OnRedrawMovePossibilities();
 }
 
-void Fighter::OnMove()
+void Fighter::OnRedrawMovePossibilities()
 {
-	if (OnFighterMoved)
+	if (OnRedrawMoveFighter)
 	{
-		OnFighterMoved(this);
+		OnRedrawMoveFighter(this);
 	}
 }
 
@@ -149,34 +164,6 @@ void Fighter::TakeDamage(int damage, Fighter* target)
 void Fighter::Die()
 {
 
-}
-
-void Fighter::UpdateMovePossibility(int width, int height, std::vector<Fighter*>* tabFighters)
-{
-	SetMovePosPossibility(width, height);
-
-	for (int i = 0; i < m_listPosPossible.size();)
-	{
-		bool positionOccupied = false;
-
-		for (Entity* fighter : *tabFighters)
-		{
-			if (*fighter->GetPosition() == m_listPosPossible[i] && *GetPosition() != m_listPosPossible[i])
-			{
-				positionOccupied = true;
-				break;
-			}
-		}
-
-		if (positionOccupied)
-		{
-			m_listPosPossible.erase(m_listPosPossible.begin() + i);
-		}
-		else
-		{
-			++i;
-		}
-	}
 }
 
 #pragma endregion

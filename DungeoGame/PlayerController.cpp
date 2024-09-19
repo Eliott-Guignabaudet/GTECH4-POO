@@ -21,8 +21,15 @@ void PlayerController::Update()
 	{
 		return;
 	}
-	HandleInput();
+	m_possessedFighter->isHisTurn = true;
 
+	if (OnEnterPlayer) 
+	{
+		OnEnterPlayer = false;
+		m_possessedFighter->OnRedrawMovePossibilities();
+	}
+
+	HandleInput();
 }
 
 void PlayerController::HandleInput()
@@ -30,8 +37,7 @@ void PlayerController::HandleInput()
 	Vector2 newdir = Vector2(0, 0);
 	HandleInputDirection(newdir);
 	HandleInputFinishTurn();
-	MovePlayer(newdir);
-	
+	MovePlayer(newdir);	
 }
 
 void PlayerController::HandleInputDirection(Vector2& direction)

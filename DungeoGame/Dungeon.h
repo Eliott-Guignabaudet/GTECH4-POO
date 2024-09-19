@@ -1,4 +1,5 @@
 #pragma once
+#include <Windows.h>
 #include <vector>
 #include "Vector2.h"
 #include <iostream>
@@ -14,9 +15,13 @@ public:
 
 #pragma region Variables
 
+	CONSOLE_SCREEN_BUFFER_INFO* csbi;
 	Hero* m_heroEntity;
 	std::vector<Fighter*> m_fighters;
 
+	std::vector<std::vector<char>> tabChar;
+
+	int m_maxWidthDungeon;
 	int m_widthDungeon;
 	int m_heightDungeon;
 
@@ -37,20 +42,25 @@ public:
 
 	void SpawnPlayer(int x, int y);
 	void SpawnMob(int nbMob = 10);
-	Mob* GetRandomMob(Maths::Vector2* randomPos);
+	Mob* GetRandomMob(Maths::Vector2 randomPos);
+	void UpdateMovePossibility(Fighter* fighter);
+	int GetConsoleWidthSize();
 
 	char FillBoundsOrDefaultChar(bool xlimit, bool ylimit);
 	void Draw();
 
-	void InitTabChar(std::vector<std::vector<char>>* tabChar);
-	void ReplaceEntity(std::vector<std::vector<char>>* tabChar);
-	void DrawTabChar(std::vector<std::vector<char>>* tabChar);
+	void InitTabChar();
+	void ReplaceEntity();
+	void DrawTabChar();
 
 	void DrawStatistics();
-	void DrawLineTitle(int size, char Char, std::string message);
-	void DrawLineElement(int size, char Char, std::string message1, std::string message2);
-	void DrawLineWithNothing(int size, char Char);
-	void DrawLineWithAnything(int size, char Char);
+	void DrawOffset(int offset = 0);
+	void DrawOffsetRight(int offset = 0);
+	void DrawOffsetLeft(int offset = 0);
+	void DrawLineTitle(char Char, std::string message);
+	void DrawLineElement(char Char, std::string message1, std::string message2);
+	void DrawLineWithNothing(char Char);
+	void DrawLineWithAnything( char Char);
 
 #pragma endregion
 

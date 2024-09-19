@@ -17,10 +17,10 @@ Maths::Vector2::Vector2(int x, int y) :
 
 int Maths::Vector2::GetDistance(Vector2 vecOrigin, Vector2 vecTarget)
 {
-    int xSquare = (vecTarget.m_x - vecOrigin.m_x);
-    int ySquare = (vecTarget.m_y - vecOrigin.m_y);
+    int xSquare = abs(vecTarget.m_x - vecOrigin.m_x);
+    int ySquare = abs(vecTarget.m_y - vecOrigin.m_y);
 
-    return abs(xSquare + ySquare);
+    return xSquare + ySquare;
 }
 
 Maths::Vector2 Maths::Vector2::GetVectorDirection(Vector2 vecOrigin, Vector2 vecTarget)
