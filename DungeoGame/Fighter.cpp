@@ -1,9 +1,17 @@
 #include "Fighter.h"
 
 std::function<void(Fighter*)> Fighter::OnRedrawMoveFighter;
+std::function<void(std::string)> Fighter::OnFighterSendActionMessage;
+
+void Fighter::SendMessage(std::string message)
+{
+	if (OnFighterSendActionMessage)
+	{
+		OnFighterSendActionMessage(m_name + " " + std::to_string(GetId()) + " " + message);
+	}
+}
 
 #pragma region Getteur / Setteur
-
 void Fighter::SetDirection(Vector2& dir)
 {
 	m_dir = dir;
@@ -164,6 +172,7 @@ void Fighter::OnRedrawMovePossibilities()
 void Fighter::Attack(Fighter* target)
 {
 	target->TakeDamage(GetAttackDamage(), this);
+	SendMessage("Attaque");
 }
 
 void Fighter::TakeDamage(int damage, Fighter* origin)

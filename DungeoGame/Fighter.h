@@ -19,12 +19,15 @@ private:
 
 	int m_attackDamage;
 	int m_sizeCanMove;
+protected:
+	void SendMessage(std::string message);
 
 public :
 
 	bool m_isDead;
 	bool isHisTurn;
 	static std::function<void(Fighter*)> OnRedrawMoveFighter;
+	static std::function<void(std::string)> OnFighterSendActionMessage;
 	std::function<void()> OnDie;
 
 #pragma endregion

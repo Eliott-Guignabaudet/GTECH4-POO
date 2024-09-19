@@ -39,6 +39,8 @@ void Mower::ExecuteCapacity()
 {
 	//Capacité spéciale : Se déplace vers le héros, cherchant à se rapprocher pour l'attaquer
 	Move();
+	SendMessage("Utilise sa capacité");
+
 }
 
 void Mower::GetKillRewards()

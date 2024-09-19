@@ -48,6 +48,7 @@ void Golem::ExecuteCapacity()
 	if (randomValue <= m_cancelDamageRate)
 	{
 		m_haveCancelDamage = true; 
+		SendMessage("Utilise sa capacité");
 		return;
 	}
 	m_haveCancelDamage = false;

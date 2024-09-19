@@ -40,6 +40,8 @@ void Spectre::ExecuteCapacity()
 {
 	//Fuit dans la direction opposée pour éviter le héros
 	Move();
+	SendMessage("Utilise sa capacité");
+
 }
 
 void Spectre::GetKillRewards()
