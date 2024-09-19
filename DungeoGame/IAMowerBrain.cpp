@@ -7,8 +7,8 @@ using namespace Maths;
 
 void IAMowerBrain::Execute(Mob* possessedMob)
 {
-	Vector2 mobPos = *possessedMob->GetPosition();
-	Vector2 playerPos = *possessedMob->GetHeroTarget()->GetPosition();
+	Vector2 mobPos = possessedMob->GetPosition();
+	Vector2 playerPos = possessedMob->GetHeroTarget()->GetPosition();
 
 	int distance = Vector2::GetDistance(mobPos, playerPos);
 	if (distance > 1)
@@ -16,7 +16,7 @@ void IAMowerBrain::Execute(Mob* possessedMob)
 		ExecuteEvent(CapacityEvent);
 	}
 
-	mobPos = *possessedMob->GetPosition();
+	mobPos = possessedMob->GetPosition();
     distance = Vector2::GetDistance(mobPos, playerPos);
 	if (distance == 1)
 	{

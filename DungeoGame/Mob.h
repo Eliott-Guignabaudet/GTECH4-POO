@@ -27,10 +27,10 @@ public:
 #pragma region Class function
 
     Mob();
-    Mob(Maths::Vector2* pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* target = nullptr);
+    Mob(Vector2 pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* target = nullptr);
 
-    virtual void Move();
-    virtual Maths::Vector2 GetNewPosition() = 0;
+    virtual void Move() override;
+    virtual Vector2 GetNewPosition() = 0;
     virtual void ExecuteCapacity() = 0;
 
 #pragma endregion

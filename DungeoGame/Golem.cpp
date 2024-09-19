@@ -7,26 +7,47 @@ Golem::Golem() :
 
 }
 
-Golem::Golem(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
+Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
 	Mob::Mob(pos, 'G', maxLife, attackDamage, sizeCanMove, cooldown, hero)
 {
 	//Attaque : Moyennement puissante
 }
 
 
-Maths::Vector2 Golem::GetNewPosition()
+Vector2 Golem::GetNewPosition()
 {
-	std::vector<Maths::Vector2> possibilitiesMoved = GetMovePosPossibility();
-	for (Maths::Vector2 pos : possibilitiesMoved)
+	Vector2 posGolem = GetPosition();
+	Vector2 posPlayer = GetHeroTarget()->GetPosition();
+	int dist = Vector2::GetDistance(posGolem, posPlayer);
+
+	std::vector<Vector2> possibilitiesMoved = GetMovePosPossibility();
+
+	if (dist - 1 <= GetSizeMove()) 
 	{
-		if (*GetHeroTarget()->GetPosition() == pos)
+		std::vector<Entity*> nearPosPlayer = GetHeroTarget()->GetNearEntityPlayer();
+
+		for (Vector2 posMoved : possibilitiesMoved)
 		{
-			return pos;
+			for (Entity* nearPos : nearPosPlayer)
+			{
+				if (Fighter* fighter = dynamic_cast<Fighter*>(nearPos))
+				{
+					continue;
+				}
+				if (nearPos->GetPosition() == posMoved)
+				{
+					return posMoved;
+				}
+			}
 		}
 	}
+	else 
+	{
+		int id = std::rand() % possibilitiesMoved.size();
+		posGolem = possibilitiesMoved[id];
+	}
 
-	int id = std::rand() % possibilitiesMoved.size();
-	return possibilitiesMoved[id];
+	return posGolem;
 }
 
 void Golem::ExecuteCapacity()

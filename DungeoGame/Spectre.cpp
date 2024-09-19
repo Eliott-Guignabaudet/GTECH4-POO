@@ -7,28 +7,28 @@ Spectre::Spectre() :
 
 }
 
-Spectre::Spectre(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
+Spectre::Spectre(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
 	Mob::Mob(pos, 'S', maxLife, attackDamage, sizeCanMove, cooldown, hero)
 {
 	//Attaque : Faible
 }
 
-Maths::Vector2 Spectre::GetNewPosition()
+Vector2 Spectre::GetNewPosition()
 {
-	Maths::Vector2 newPos = Maths::Vector2(0, 0);
+	Vector2 posSpectre = GetPosition();
 	int maxDist = 0;
 
-	for (Maths::Vector2 pos : GetMovePosPossibility())
+	for (Vector2 pos : GetMovePosPossibility())
 	{
-		int dist = Maths::Vector2::GetDistance(pos, *GetHeroTarget()->GetPosition());
+		int dist = Vector2::GetDistance(pos, GetHeroTarget()->GetPosition());
 		if (maxDist < dist)
 		{
-			newPos = pos;
+			posSpectre = pos;
 			maxDist = dist;
 		}
 	}
 
-	return newPos;
+	return posSpectre;
 }
 
 void Spectre::ExecuteCapacity()

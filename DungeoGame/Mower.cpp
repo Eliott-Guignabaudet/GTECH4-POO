@@ -1,5 +1,6 @@
 #include "Mower.h"
 #include "Hero.h"
+#include "Fighter.h"
 
 Mower::Mower() :
 	Mob::Mob()
@@ -7,7 +8,7 @@ Mower::Mower() :
 
 }
 
-Mower::Mower(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
+Mower::Mower(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
 	Mob::Mob(pos, 'F', maxLife, attackDamage, sizeCanMove, cooldown, hero)
 {
 	//Attaque : Très puissante
@@ -15,22 +16,39 @@ Mower::Mower(Maths::Vector2* pos, int maxLife, int attackDamage, int sizeCanMove
 
 
 
-Maths::Vector2 Mower::GetNewPosition()
+Vector2 Mower::GetNewPosition()
 {
-	Maths::Vector2 newPos = Maths::Vector2(0, 0);
-	int maxDist = INT_MAX;
+	Vector2 posMower = GetPosition();
+	Vector2 posPlayer = GetHeroTarget()->GetPosition();
+	int minDist = INT_MAX;
 
-	for (Maths::Vector2 pos : GetMovePosPossibility())
+	for (Vector2 pos : GetMovePosPossibility())
 	{
-		int dist = Maths::Vector2::GetDistance(pos, *GetHeroTarget()->GetPosition());
-		if (maxDist > dist)
+		int dist = Vector2::GetDistance(pos, posPlayer);
+		if (dist <= 1) 
 		{
-			newPos = pos;
-			maxDist = dist;
+			std::vector<Entity*> nearEntityPlayer = GetHeroTarget()->GetNearEntityPlayer();
+
+			for (Entity* nearPos : nearEntityPlayer)
+			{
+				if (Fighter* fighter = dynamic_cast<Fighter*>(nearPos))
+				{
+					continue;
+				}
+				else if(pos == nearPos->GetPosition())
+				{
+					return pos;
+				}
+			}
+		}
+		else if (minDist > dist)
+		{
+			posMower = pos;
+			minDist = dist;
 		}
 	}
 
-	return newPos;
+	return posMower;
 }
 
 void Mower::ExecuteCapacity()

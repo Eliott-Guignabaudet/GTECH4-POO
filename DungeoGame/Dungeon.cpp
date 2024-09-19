@@ -1,7 +1,6 @@
 ﻿#include "Dungeon.h"
 #include <string>
 #include <iomanip>
-#include <Windows.h>
 #include "Fighter.h"
 #include "Hero.h"
 #include "Golem.h"
@@ -21,7 +20,9 @@ enum class EnumMob {
 
 
 Dungeon::Dungeon() :
+    csbi(nullptr),
     m_heroEntity(nullptr),
+    m_maxWidthDungeon(0),
     m_widthDungeon(0),
     m_heightDungeon(0)
 {
@@ -29,9 +30,12 @@ Dungeon::Dungeon() :
 }
 
 Dungeon::Dungeon(int width, int height) :
+    m_heroEntity(nullptr),
     m_widthDungeon(width),
     m_heightDungeon(height)
 {
+    csbi = new CONSOLE_SCREEN_BUFFER_INFO();
+    m_maxWidthDungeon = GetConsoleWidthSize();
     m_fighters = std::vector<Fighter*>();
 
     std::srand(time(NULL));
@@ -70,8 +74,12 @@ void Dungeon::RemoveFighter(Fighter* entity)
 
 void Dungeon::SpawnPlayer(int x, int y)
 {
-    Maths::Vector2* posPlayer = new Maths::Vector2(x, y);
-    Hero* player = new Hero(posPlayer, 10, 10, 3);
+    Maths::Vector2 posPlayer = Maths::Vector2(x, y);
+    int maxLife = 10;
+    int attackDamage = 10;
+    int sizeCanMove = 4;
+
+    Hero* player = new Hero(posPlayer, maxLife, attackDamage, sizeCanMove);
     m_heroEntity = player;
     AddFighter(player);
 }
@@ -81,17 +89,17 @@ void Dungeon::SpawnMob(int nbMob)
     for (int i = 0; i < nbMob; i++)
     {
         bool isOk = false;
-        Maths::Vector2* pos = new Maths::Vector2(0,0);
+        Maths::Vector2 pos = Maths::Vector2(0,0);
 
         while (!isOk) 
         {
-            pos->m_x = (std::rand() % (m_widthDungeon - 1)) + 1;
-            pos->m_y = (std::rand() % (m_heightDungeon - 1)) + 1;
+            pos.m_x = (std::rand() % (m_widthDungeon - 1)) + 1;
+            pos.m_y = (std::rand() % (m_heightDungeon - 1)) + 1;
             isOk = true;
 
             for (Entity* entity : m_fighters)
             {
-                if (*entity->GetPosition() == *pos)
+                if (entity->GetPosition() == pos)
                 {
                     isOk = false;
                 }
@@ -107,28 +115,32 @@ void Dungeon::SpawnMob(int nbMob)
 
     for (Fighter* fighter : m_fighters)
     {
-        fighter->UpdateMovePossibility(m_widthDungeon, m_heightDungeon, &m_fighters);
+        UpdateMovePossibility(fighter);
     }
 }
 
-Mob* Dungeon::GetRandomMob(Maths::Vector2* randomPos)
+Mob* Dungeon::GetRandomMob(Maths::Vector2 randomPos)
 {
     int id = std::rand() % (int)EnumMob::Size;
+
+    int maxLife = 6;
+    int attackDamage = 2;
+    int sizeCanMove = 1;
 
     switch (id) {
 
     case (int)EnumMob::Golem: {
-        Golem* golem = new Golem(randomPos, 10, 3, 1, 3, m_heroEntity);
+        Golem* golem = new Golem(randomPos, maxLife * 2, attackDamage, sizeCanMove, 3, m_heroEntity);
         return golem;
     }
 
     case (int)EnumMob::Spectre: {
-        Spectre* spectre = new Spectre(randomPos, 10, 3, 1, 3, m_heroEntity);
+        Spectre* spectre = new Spectre(randomPos, maxLife / 2, attackDamage / 2, sizeCanMove * 2, 3, m_heroEntity);
         return spectre;
     }
 
     case (int)EnumMob::Mower: {
-        Mower* mower = new Mower(randomPos, 10, 3, 1, 3, m_heroEntity);
+        Mower* mower = new Mower(randomPos, 10, attackDamage * 2, sizeCanMove * 2, 3, m_heroEntity);
         return mower;
     }
 
@@ -136,6 +148,23 @@ Mob* Dungeon::GetRandomMob(Maths::Vector2* randomPos)
         return nullptr;
     }
 
+    }
+}
+
+void Dungeon::UpdateMovePossibility(Fighter* fighter)
+{
+    fighter->SetMovePosPossibility(m_widthDungeon, m_heightDungeon);
+    fighter->SetRemoveFighterPosPossibility(&m_fighters);
+    m_heroEntity->SetNearPosPlayer(&m_fighters);
+}
+
+int Dungeon::GetConsoleWidthSize()
+{
+    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    if (GetConsoleScreenBufferInfo(hStdOut, csbi)) {
+        int width = csbi->srWindow.Right - csbi->srWindow.Left + 1;
+        return width;
     }
 }
 
@@ -162,6 +191,8 @@ char Dungeon::FillBoundsOrDefaultChar(bool xlimit, bool ylimit)
 void Dungeon::Draw()
 {
     //Init Tab Char
+    m_maxWidthDungeon = GetConsoleWidthSize();
+
     std::vector<std::vector<char>> tabChar = std::vector<std::vector<char>>();
     InitTabChar(&tabChar);
 
@@ -176,19 +207,18 @@ void Dungeon::Draw()
 
 void Dungeon::InitTabChar(std::vector<std::vector<char>>* tabChar)
 {
-    tabChar->resize(m_heightDungeon + 1, std::vector<char>(m_widthDungeon + 2));
+    tabChar->resize((m_heightDungeon * 2) + 1, std::vector<char>((m_widthDungeon * 2) + 1));
 
-    for (int i = 0; i <= m_heightDungeon; i++)
+    for (int i = 0; i <= (m_heightDungeon * 2); i++)
     {
-        bool yIsInLimit = (i == 0 || i == m_heightDungeon);
+        bool yIsInLimit = (i == 0 || i == (m_heightDungeon * 2) || i % 2);
 
-        for (int j = 0; j <= m_widthDungeon; j++)
+        for (int j = 0; j <= (m_widthDungeon * 2); j++)
         {
-            bool xIsInLimit = (j == 0 || j == m_widthDungeon);
+            bool xIsInLimit = (j == 0 || j == (m_widthDungeon * 2) || j % 2);
 
             (*tabChar)[i][j] = FillBoundsOrDefaultChar(xIsInLimit, yIsInLimit);
         }
-        (*tabChar)[i][m_widthDungeon + 1] = '\n';
     }
 }
 
@@ -198,18 +228,23 @@ void Dungeon::ReplaceEntity(std::vector<std::vector<char>>* tabChar)
     {
         for (Maths::Vector2 posPossible : fighter->GetMovePosPossibility())
         {
-            (*tabChar)[posPossible.m_y][posPossible.m_x] = 'm';
+            if (!fighter->isHisTurn) 
+            {
+                continue;
+            }
+
+            (*tabChar)[posPossible.m_y * 2][posPossible.m_x * 2] = 'm';
 
             if (fighter == m_heroEntity) {
-                (*tabChar)[posPossible.m_y][posPossible.m_x] = 'a';
+                (*tabChar)[posPossible.m_y * 2][posPossible.m_x * 2] = 'a';
             }
         }
     }
 
     for (Fighter* fighter : m_fighters)
     {
-        Maths::Vector2 vect = *fighter->GetPosition();
-        (*tabChar)[vect.m_y][vect.m_x] = fighter->GetSprite();
+        Maths::Vector2 vect = fighter->GetPosition();
+        (*tabChar)[vect.m_y * 2][vect.m_x * 2] = fighter->GetSprite();
     }
 }
 
@@ -217,6 +252,7 @@ void Dungeon::DrawTabChar(std::vector<std::vector<char>>* tabChar)
 {
     for (std::vector<char> tabXChar : *tabChar)
     {
+        DrawOffsetRight();
         for (char Ychar : tabXChar)
         {
             std::string prefix = "";
@@ -224,75 +260,111 @@ void Dungeon::DrawTabChar(std::vector<std::vector<char>>* tabChar)
 
             if (Ychar == 'G' || Ychar == 'S' || Ychar == 'F')  // Mob
             {
-                prefix = "\033[41;37m"; // Fond Rouge (41), Text Blanc (37)
+                prefix = "\033[40;31m"; // Fond Noir (40), Texte Rouge (31)
             }
 
             else if (Ychar == 'm') // Possibility Mob move
             {
                 Ychar = ' ';
-                prefix = "\033[41m"; // Fond Rouge (41)
+                prefix = "\033[41m"; // Fond Rouge (41), Texte par défaut (blanc)
             }
 
             else if (Ychar == '@') // Player
             {
-                prefix = "\033[42;30m"; // Fond Vert (42), Text Noir (30)
+                prefix = "\033[40;36m"; // Fond Noir (40), Texte Cyan (36)
             }
 
-            else if (Ychar == 'a')// Possibility Player move
+            else if (Ychar == 'a') // Possibility Player move
             {
                 Ychar = ' ';
-                prefix = "\033[42m"; // Fond Vert (42)
+                prefix = "\033[42m"; // Fond Vert (42), Texte par défaut (blanc)
             }
 
             std::string txt = prefix + Ychar + suffix;
 
             std::cout << txt;
         }
+        std::cout << '\n';
     }
 }
 
 void Dungeon::DrawStatistics()
 {
-    DrawLineWithAnything(m_widthDungeon, '-');
-    //DrawLineWithNothing(m_widthDungeon, '*');
+    DrawLineWithAnything('-');
 
-    DrawLineTitle(m_widthDungeon, '*', "Player Statistics :");
+    DrawLineTitle('*', "Player Statistics :");
 
-    DrawLineWithNothing(m_widthDungeon, '*');
+    DrawLineWithNothing('*');
 
-    DrawLineElement(m_widthDungeon, '*', "Life :", std::to_string(m_heroEntity->GetLife()));
-    DrawLineElement(m_widthDungeon, '*', "Attack :", std::to_string(m_heroEntity->GetAttackDamage()));
+    DrawLineElement('*', "Life :", std::to_string(m_heroEntity->GetLife()));
+    DrawLineElement('*', "Attack :", std::to_string(m_heroEntity->GetAttackDamage()));
 
-    //DrawLineWithNothing(m_widthDungeon, '*');
-    DrawLineWithAnything(m_widthDungeon, '-');
+    DrawLineWithAnything('-');
 }
 
-void Dungeon::DrawLineTitle(int size, char Char, std::string message)
+void Dungeon::DrawOffset(int offset)
 {
-    std::cout << std::setw(5) << std::left << Char
-        << std::setw(size - 5) << std::left << message
-        << Char << "\n";
+    if (offset == 0) {
+        offset = (m_maxWidthDungeon - (m_widthDungeon * 2)) / 2;
+    }
+    std::cout << std::setw(offset - 1);
 }
 
-void Dungeon::DrawLineElement(int size, char Char, std::string message1, std::string message2)
+void Dungeon::DrawOffsetRight(int offset)
 {
-    std::cout << std::setw((size / 5)) << std::left << Char
-        << std::setw((size / 5) * 2) << std::left << message1
-        << std::setw((size / 5) * 2) << std::left << message2
-        << Char << "\n";
+    DrawOffset(offset);
+    std::cout << std::right << ' ';
 }
 
-void Dungeon::DrawLineWithNothing(int size, char Char) {
+void Dungeon::DrawOffsetLeft(int offset)
+{
+    DrawOffset(offset + 1);
+    std::cout << std::left;
+}
 
-    std::cout << std::setw(5) << std::left << Char
-        << std::setw(size - 4) << std::right << Char;
+void Dungeon::DrawLineTitle(char Char, std::string message)
+{
+    DrawOffsetRight();
+    int marge = (m_widthDungeon * 2) / 10;
+
+    std::cout << Char;
+    DrawOffsetRight(marge);
+    DrawOffsetLeft((m_widthDungeon * 2) - marge);
+    std::cout << message << Char;
 
     std::cout << "\n";
 }
 
-void Dungeon::DrawLineWithAnything(int size, char Char) {
+void Dungeon::DrawLineElement(char Char, std::string message1, std::string message2)
+{
+    DrawOffsetRight();
+    int marge = (m_widthDungeon * 2) / 5;
 
-    for (int i = 0; i <= size; i++)
+    std::cout << Char;
+    DrawOffsetRight(marge);
+    DrawOffsetLeft(marge * 2);
+    std::cout << message1;
+    DrawOffsetLeft(marge * 2);
+    std::cout << message2 << Char;
+    std::cout << "\n";
+}
+
+void Dungeon::DrawLineWithNothing(char Char) 
+{
+    DrawOffsetRight();
+
+    std::cout << Char;
+    DrawOffsetRight(m_widthDungeon * 2);
+    std::cout << Char;
+
+    std::cout << "\n";
+}
+
+void Dungeon::DrawLineWithAnything(char Char) 
+{
+    DrawOffsetRight();
+
+    for (int i = 0; i <= m_widthDungeon * 2; i++)
     {
         std::cout << Char;
     }

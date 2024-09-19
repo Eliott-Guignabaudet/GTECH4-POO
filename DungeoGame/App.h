@@ -57,14 +57,13 @@ private:
 	void Update();
 	void UpdateAllFighterPossibilities();
 
-
 #pragma endregion
 
 #pragma region Events
 
 	void HandleOnPlayerFinishTurn();
 	void HandleOnFinishIATurn();
-	void HandleOnFighterMoved(Fighter* fighter);
+	void HandleOnRedrawFighter(Fighter* fighter);
 
 #pragma endregion
 
