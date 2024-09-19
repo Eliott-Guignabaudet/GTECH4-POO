@@ -84,13 +84,13 @@ void Fighter::SetMovePosPossibility(int xLimit, int Ylimit)
 
 	for (int i = m_pos.m_x - m_sizeCanMove; i <= m_pos.m_x + m_sizeCanMove; i++)
 	{
-		if (i <= 0 || i >= xLimit) {
+		if (i < 0 || i >= xLimit) {
 			continue;
 		}
 
 		for (int j = m_pos.m_y - m_sizeCanMove; j <= m_pos.m_y + m_sizeCanMove; j++)
 		{
-			if (j <= 0 || j >= Ylimit) {
+			if (j < 0 || j >= Ylimit) {
 				continue;
 			}
 
