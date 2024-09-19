@@ -30,38 +30,29 @@ void Hero::Move()
 	}
 }
 
-void Hero::SetNearPosPlayer(std::vector<Fighter*>* fighters)
+void Hero::SetNearPosPlayer(const std::vector<Fighter*>& fighters)
 {
-	nearPos = std::vector<Entity*>();
+	m_nearPos = std::vector<Fighter*>();
+	Vector2 nearPoses[4] = {
+		{m_pos.m_x + 1, m_pos.m_y},
+		{m_pos.m_x - 1, m_pos.m_y},
+		{m_pos.m_x , m_pos.m_y + 1},
+		{m_pos.m_x , m_pos.m_y - 1}
+	};
 
-	for (int i = m_pos.m_x - 1; i <= m_pos.m_x + 1; i++)
+	for (Fighter* otherFighter : fighters)
 	{
-		for (int j = m_pos.m_y - 1; j <= m_pos.m_y + 1; j++)
+		for (Vector2 nearPose : nearPoses)
 		{
-			int offsetX = abs(m_pos.m_x - i);
-			int offsetY = abs(m_pos.m_y - j);
-
-			if (offsetX + offsetY == 1)
+			if (otherFighter->GetPosition() == nearPose) 
 			{
-				nearPos.push_back(new Entity(Vector2(i, j)));
-			}
-
-		}
-	}
-
-	for (Entity* entity : nearPos) 
-	{
-		for (Fighter* otherFighter : *fighters)
-		{
-			if (otherFighter->GetPosition() == entity->GetPosition()) 
-			{
-				entity = otherFighter;
+				m_nearPos.push_back(otherFighter);
 			}
 		}
 	}
 }
 
-std::vector<Entity*>& Hero::GetNearEntityPlayer()
+std::vector<Fighter*>& Hero::GetNearFightPlayer()
 {
-	return nearPos;
+	return m_nearPos;
 }

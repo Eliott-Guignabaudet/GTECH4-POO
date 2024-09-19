@@ -6,7 +6,7 @@ class Hero :
 {
 
 public:
-	std::vector<Entity*> nearPos;
+	std::vector<Fighter*> m_nearPos;
 
 #pragma region Class function
 
@@ -14,8 +14,8 @@ public:
 	Hero(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove);
 
 	virtual void Move() override;
-	void SetNearPosPlayer(std::vector<Fighter*>* fighters);
-	std::vector<Entity*>& GetNearEntityPlayer();
+	void SetNearPosPlayer(const std::vector<Fighter*>& fighters);
+	std::vector<Fighter*>& GetNearFightPlayer();
 
 #pragma endregion
 };
