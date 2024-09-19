@@ -4,13 +4,14 @@
 Spectre::Spectre() :
 	Mob::Mob()
 {
-
+	m_name = "Spectre";
 }
 
 Spectre::Spectre(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
 	Mob::Mob(pos, 'S', maxLife, attackDamage, sizeCanMove, cooldown, hero)
 {
 	//Attaque : Faible
+	m_name = "Spectre";
 }
 
 Vector2 Spectre::GetNewPosition(int sizeCanMove)

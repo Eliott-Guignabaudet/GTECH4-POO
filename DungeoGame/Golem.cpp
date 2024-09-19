@@ -6,7 +6,7 @@ Golem::Golem() :
 	m_haveCancelDamage(false),
 	m_cancelDamageRate(25)
 {
-
+	m_name = "Golem";
 }
 
 Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
@@ -15,6 +15,7 @@ Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 	m_cancelDamageRate(25)
 {
 	//Attaque : Moyennement puissante
+	m_name = "Golem";
 }
 
 

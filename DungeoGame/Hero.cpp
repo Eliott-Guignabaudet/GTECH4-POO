@@ -3,13 +3,14 @@
 Hero::Hero() :
 	Fighter::Fighter()
 {
-
+	m_name = "Hero";
 }
 
 Hero::Hero(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove) :
 	Fighter::Fighter(pos, '@', maxLife, attackDamage, sizeCanMove)
 {
 	isHisTurn = true;
+	m_name = "Hero";
 }
 
 void Hero::HealPlayer()

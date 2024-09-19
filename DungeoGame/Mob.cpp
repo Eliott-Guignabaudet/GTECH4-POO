@@ -7,6 +7,7 @@ Mob::Mob() :
 	m_targetPlayer(nullptr),
 	m_cooldown(0)
 {
+	m_name = "Mob";
 
 }
 
@@ -15,7 +16,7 @@ Mob::Mob(Vector2 pos, char sprite, int maxLife, int attackDamage, int sizeCanMov
 	m_targetPlayer(target),
 	m_cooldown(cooldown)
 {
-
+	m_name = "Mob";
 }
 
 Vector2 Mob::GoToPlayer(int sizeCanMove)

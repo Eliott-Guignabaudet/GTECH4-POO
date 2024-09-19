@@ -64,7 +64,7 @@ Fighter::Fighter() :
 	isHisTurn(false),
 	m_isDead(false)
 {
-
+	m_name = "Fighter";
 }
 
 Fighter::Fighter(Vector2 pos, char sprite, int maxLife, int attackDamage, int sizeCanMove) :
@@ -78,6 +78,8 @@ Fighter::Fighter(Vector2 pos, char sprite, int maxLife, int attackDamage, int si
 	SetMaxLife(maxLife);
 	SetAttackDamage(attackDamage);
 	SetSizeMove(sizeCanMove);
+	m_name = "Fighter";
+
 }
 
 void Fighter::SetMovePosPossibility(int xLimit, int Ylimit)

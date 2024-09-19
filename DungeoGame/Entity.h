@@ -1,6 +1,6 @@
 #pragma once
+#include <string>
 #include "Vector2.h"
-
 using namespace Maths;
 
 class Entity
@@ -14,6 +14,7 @@ protected :
 	Vector2 m_pos;
 
 	char m_sprite;
+	std::string m_name;
 
 #pragma endregion
 
@@ -27,6 +28,8 @@ public:
 	char GetSprite();
 
 	int GetId();
+	std::string GetName();
+
 #pragma endregion
 
 #pragma region Class function

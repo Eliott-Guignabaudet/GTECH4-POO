@@ -7,13 +7,14 @@ std::function<void(Fighter*)> Mower::OnAttackAllFighter;
 Mower::Mower() :
 	Mob::Mob()
 {
-
+	m_name = "Mower";
 }
 
 Mower::Mower(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* hero) :
 	Mob::Mob(pos, 'F', maxLife, attackDamage, sizeCanMove, cooldown, hero)
 {
 	//Attaque : Très puissante
+	m_name = "Mower";
 }
 
 

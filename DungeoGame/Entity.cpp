@@ -30,6 +30,11 @@ int Entity::GetId()
 	return m_id;
 }
 
+std::string Entity::GetName()
+{
+	return m_name;
+}
+
 #pragma endregion
 
 #pragma region Class function
@@ -37,7 +42,8 @@ int Entity::GetId()
 Entity::Entity() :
 	m_pos(0, 0),
 	m_sprite(' '),
-	m_id(Entity::s_currentEntityIndex++)
+	m_id(Entity::s_currentEntityIndex++),
+	m_name("Entity")
 {
 
 }
@@ -45,7 +51,8 @@ Entity::Entity() :
 Entity::Entity(Vector2 pos, char sprite) :
 	m_pos(pos),
 	m_sprite(sprite),
-	m_id(Entity::s_currentEntityIndex++)
+	m_id(Entity::s_currentEntityIndex++),
+	m_name("Entity")
 {
 
 }
