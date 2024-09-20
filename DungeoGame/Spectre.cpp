@@ -42,12 +42,12 @@ void Spectre::ExecuteCapacity()
 {
 	//Fuit dans la direction opposée pour éviter le héros
 	Move();
-	SendMessage("use its capacity !");
+	EventSendMessage("use its capacity !");
 
 }
 
 void Spectre::GetKillRewards()
 {
-	SendMessage("Heal player" + std::to_string(GetHeroTarget()->GetMaxLife() - GetHeroTarget()->GetLife()));
+	EventSendMessage("Heal player" + std::to_string(GetHeroTarget()->GetMaxLife() - GetHeroTarget()->GetLife()));
 	GetHeroTarget()->HealPlayer();
 }

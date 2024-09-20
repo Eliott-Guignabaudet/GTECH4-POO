@@ -27,7 +27,7 @@ Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 void Golem::Move()
 {
 	Mob::Move();
-	SendMessage("Move");
+	EventSendMessage("Move");
 }
 
 Vector2 Golem::GetNewPosition(int sizeCanMove)
@@ -59,7 +59,7 @@ void Golem::ExecuteCapacity()
 	if (randomValue <= m_cancelDamageRate)
 	{
 		m_haveCancelDamage = true; 
-		SendMessage("use its capacity !");
+		EventSendMessage("use its capacity !");
 		return;
 	}
 	m_haveCancelDamage = false;
@@ -69,7 +69,7 @@ void Golem::ExecuteCapacity()
 
 void Golem::GetKillRewards()
 {
-	SendMessage("Attack player +" + std::to_string(m_attackRewardUpgrade));
+	EventSendMessage("Attack player +" + std::to_string(m_attackRewardUpgrade));
 	GetHeroTarget()->UpgradeAttack(m_attackRewardUpgrade);
 }
 

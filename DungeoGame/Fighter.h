@@ -20,7 +20,7 @@ private:
 	int m_attackDamage;
 	int m_sizeCanMove;
 protected:
-	void SendMessage(std::string message);
+	void EventSendMessage(std::string message);
 
 public :
 

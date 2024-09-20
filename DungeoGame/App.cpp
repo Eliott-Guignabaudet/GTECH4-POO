@@ -32,10 +32,8 @@
 #pragma region StateMachine Includes
 
 #include "StateMachine.h"
-#include "InitState.h"
 #include "PlayerTurnState.h"
 #include "IATurnState.h"
-#include "GameOverState.h"
 
 #pragma endregion
 
@@ -105,17 +103,13 @@ void App::Init()
 
 void App::InitStateMachine()
 {
-	InitState* initState = new InitState();
 	PlayerTurnState* playerTurnState = new PlayerTurnState();
 	IATurnState* iaTurnState = new IATurnState();
-	GameOverState* gameOverState = new GameOverState();
 
 	std::vector<State*> states =
 	{
-		initState,
 		playerTurnState,
 		iaTurnState,
-		gameOverState
 	};
 	
 

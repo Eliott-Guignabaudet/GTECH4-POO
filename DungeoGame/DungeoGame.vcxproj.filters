@@ -22,9 +22,6 @@
     <Filter Include="Fichiers d%27en-tête\Gameplay\IA">
       <UniqueIdentifier>{280b4521-c6a9-4496-99a2-f4d029974c71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Fichiers d%27en-tête\Gameplay\IA\StateMachine">
-      <UniqueIdentifier>{e2403739-0fbf-41b5-b9c0-447dc66d2dcb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers d%27en-tête\Gameplay\Player">
       <UniqueIdentifier>{f6f7d22c-df22-4af3-bfe3-170dc3a6fb04}</UniqueIdentifier>
     </Filter>
@@ -51,9 +48,6 @@
     </Filter>
     <Filter Include="Fichiers sources\Gameplay\Player">
       <UniqueIdentifier>{ad739a31-2bce-4abd-9d85-2af00bd0557e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\Gameplay\IA\StateMachine">
-      <UniqueIdentifier>{0dc7caf4-ae82-4181-89a3-e17ff3676f04}</UniqueIdentifier>
     </Filter>
     <Filter Include="Fichiers d%27en-tête\Maths">
       <UniqueIdentifier>{80cf65fe-494d-4ed4-96eb-f99dfd0f57b0}</UniqueIdentifier>
@@ -108,12 +102,6 @@
     <ClCompile Include="IATurnState.cpp">
       <Filter>Fichiers sources\App\StateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="InitState.cpp">
-      <Filter>Fichiers sources\App\StateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="GameOverState.cpp">
-      <Filter>Fichiers sources\App\StateMachine</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerTurnState.cpp">
       <Filter>Fichiers sources\App\StateMachine</Filter>
     </ClCompile>
@@ -128,18 +116,6 @@
     </ClCompile>
     <ClCompile Include="Golem.cpp">
       <Filter>Fichiers sources\Gameplay\IA</Filter>
-    </ClCompile>
-    <ClCompile Include="IAAttackState.cpp">
-      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="IACapacityState.cpp">
-      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="IADieState.cpp">
-      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
-    </ClCompile>
-    <ClCompile Include="IAMoveState.cpp">
-      <Filter>Fichiers sources\Gameplay\IA\StateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Hero.cpp">
       <Filter>Fichiers sources\Gameplay\Player</Filter>
@@ -197,9 +173,6 @@
     <ClInclude Include="IAController.h">
       <Filter>Fichiers d%27en-tête\App</Filter>
     </ClInclude>
-    <ClInclude Include="Golem.h">
-      <Filter>Fichiers d%27en-tête\Gameplay\IA</Filter>
-    </ClInclude>
     <ClInclude Include="Mob.h">
       <Filter>Fichiers d%27en-tête\Gameplay\IA</Filter>
     </ClInclude>
@@ -209,18 +182,6 @@
     <ClInclude Include="Spectre.h">
       <Filter>Fichiers d%27en-tête\Gameplay\IA</Filter>
     </ClInclude>
-    <ClInclude Include="IAMoveState.h">
-      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="IADieState.h">
-      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="IACapacityState.h">
-      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="IAAttackState.h">
-      <Filter>Fichiers d%27en-tête\Gameplay\IA\StateMachine</Filter>
-    </ClInclude>
     <ClInclude Include="Hero.h">
       <Filter>Fichiers d%27en-tête\Gameplay\Player</Filter>
     </ClInclude>
@@ -228,12 +189,6 @@
       <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="IATurnState.h">
-      <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="GameOverState.h">
-      <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
-    </ClInclude>
-    <ClInclude Include="InitState.h">
       <Filter>Fichiers d%27en-tête\App\StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="StateMachine.h">
@@ -249,9 +204,6 @@
       <Filter>Fichiers d%27en-tête\App</Filter>
     </ClCompile>
     <ClInclude Include="Time.h">
-      <Filter>Fichiers d%27en-tête\App</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2.h">
       <Filter>Fichiers d%27en-tête\App</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -271,6 +223,12 @@
     </ClInclude>
     <ClInclude Include="IASpectreBrain.h">
       <Filter>Fichiers d%27en-tête\Gameplay\IA\Brains</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Fichiers d%27en-tête\Maths</Filter>
+    </ClInclude>
+    <ClInclude Include="Golem.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
