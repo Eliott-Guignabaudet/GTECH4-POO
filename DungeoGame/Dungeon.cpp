@@ -123,8 +123,13 @@ void Dungeon::RemoveFighters()
 {
     for (auto it = m_fightersPtr.begin(); it != m_fightersPtr.end();)
     {
+        
         if ((*it)->m_isDead)
         {
+            if (dynamic_cast<Hero*>((*it)))
+            {
+                m_heroPtr = nullptr;
+            }
             delete* it;
             it = m_fightersPtr.erase(it);
         }
@@ -222,6 +227,10 @@ void Dungeon::UpdateMovePossibility(Fighter* fighter)
 
 void Dungeon::UpdateNearFighterPlayer()
 {
+    if (m_heroPtr == nullptr)
+    {
+        return;
+    }
     m_heroPtr->SetNearPosPlayer(m_fightersPtr);
 }
 

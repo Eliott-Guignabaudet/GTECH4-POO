@@ -15,9 +15,9 @@ Mower::Mower(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 {
 	//Attaque : Très puissante
 	m_name = "Mower";
-	std::string capacity = "All mob -" + std::to_string((GetAttackDamage() * GetPercentReward()) / 100) + " PV";
-	SetCapacityTxt(capacity);
 	SetPercentReward(50);
+	std::string capacity = "All mob -" + std::to_string((attackDamage * GetPercentReward()) / 100) + " PV";
+	SetCapacityTxt(capacity);
 }
 
 

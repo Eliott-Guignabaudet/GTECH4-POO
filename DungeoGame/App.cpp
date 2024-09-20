@@ -82,7 +82,7 @@ void App::Run()
 	}
 	Sleep(1000);
 	system("cls");
-	std::cout << "Bravo" << std::endl;
+	std::cout << "Congratulation! You Win!" << std::endl;
 }
 
 #pragma region Lifecycle
@@ -124,9 +124,12 @@ void App::InitStateMachine()
 
 void App::InitDungeon(int width, int height)
 {
+#if _DEBUG
 	m_dungeon->InitWithData(DungeonParser::ParseDungeon("DungeonMap.txt"));
-	//m_dungeon->SpawnPlayer(width / 2, height / 2);
-	//m_dungeon->SpawnMob();
+#else
+	m_dungeon->SpawnPlayer(width / 2, height / 2);
+	m_dungeon->SpawnMob();
+#endif
 }
 
 void App::InitControllers()
@@ -208,6 +211,7 @@ void App::Draw()
 {
 	system("cls");
 	State* state = m_gameStateMachine->GetCurrentState();
+	std::cout << std::setw(25) << std::right << std::setw(25) << " Room : " + std::to_string(m_dungeon->m_dungeonRoom) ;
 	std::cout << std::setw(25) << std::right << std::setw(25) << " Turn : " + std::to_string(m_dungeon->m_currentTurn) << std::setw(25) << std::right;
 	if (dynamic_cast<PlayerTurnState*>(state))
 	{
@@ -221,10 +225,11 @@ void App::Draw()
 	}
 
 	m_dungeon->Draw();
-
+#if _DEBUG
 	std::cout 
 		<< Time::GetInstance()->GetElapsedTime() 
 		<< std::endl;
+#endif
 }
 
 void App::RemoveIAController(IAController* iaController)
@@ -279,7 +284,7 @@ void App::HandleOnFinishIATurn()
 	UpdateAllFighterPossibilities();
 	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
-	m_dungeon->m_message->ClearStockMessage();
+	
 }
 
 void App::HandleOnIAControllerFinish()
@@ -301,7 +306,9 @@ void App::HandleOnFighterSendMessage(std::string message)
 
 void App::ResetDungeon()
 {
+	m_dungeon->m_message->ClearStockMessage();
 	m_dungeon->Clear();
+	m_dungeon->m_heroPtr = nullptr;
 	for (int i = 0; i < m_iasControllers.size(); i++)
 	{
 		if (m_iasControllers[i] == nullptr)
@@ -318,6 +325,7 @@ void App::ResetDungeon()
 	InitDungeon(20, 10);
 	InitControllers();
 	m_dungeon->m_dungeonRoom = 1;
+	m_dungeon->m_currentTurn = 1;
 }
 
 

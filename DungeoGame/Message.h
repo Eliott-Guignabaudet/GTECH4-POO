@@ -20,7 +20,6 @@
 #define BG_CYAN    "\033[46m"       // Fond cyan
 #define BG_WHITE   "\033[47m"       // Fond blanc
 
-class Hero;
 class Dungeon;
 class Fighter;
 
@@ -31,7 +30,6 @@ public:
 #pragma region Variables
 
 	CONSOLE_SCREEN_BUFFER_INFO* m_csbi; 
-	Hero* m_player;
 	Dungeon* m_currentDungeon;
 
 	std::vector<std::string> m_tabStringStatistics;

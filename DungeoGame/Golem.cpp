@@ -24,6 +24,12 @@ Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 }
 
 
+void Golem::Move()
+{
+	Mob::Move();
+	SendMessage("Move");
+}
+
 Vector2 Golem::GetNewPosition(int sizeCanMove)
 {
 	Vector2 posPlayer = GetHeroTarget()->GetPosition();

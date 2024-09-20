@@ -7,7 +7,7 @@ void Fighter::SendMessage(std::string message)
 {
 	if (OnFighterSendActionMessage)
 	{
-		OnFighterSendActionMessage(m_name + " " /*+ std::to_string(GetId()) + " "*/ + message);
+		OnFighterSendActionMessage(m_name + " " + std::to_string(GetId()) + " " + message);
 	}
 }
 

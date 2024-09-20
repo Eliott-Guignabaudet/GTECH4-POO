@@ -7,7 +7,6 @@
 
 Message::Message() : 
     m_csbi(nullptr),
-    m_player(nullptr),
     m_currentDungeon(nullptr),
     m_windowScreenSize(0),
     m_tabMessageSize(0),
@@ -17,7 +16,6 @@ Message::Message() :
 }
 
 Message::Message(Dungeon* dungeon) :
-    m_player(nullptr),
     m_windowScreenSize(0),
     m_tabMessageSize(0),
     m_currentIndexMessage(1)
@@ -48,10 +46,6 @@ std::vector<std::string>* Message::InitTab()
 
 void Message::InitStatistics()
 {
-    if (m_player == nullptr) 
-    {
-        m_player = m_currentDungeon->m_heroPtr;
-    }
 
     m_tabStringStatistics = *InitTab();
     SetPlayerStatsString();
@@ -91,9 +85,9 @@ void Message::AddMessage(std::string message)
 
 void Message::SetPlayerStatsString()
 {
-    if (m_tabStringStatistics.size() > 4)
+    if (m_tabStringStatistics.size() > 4 && m_currentDungeon->m_heroPtr != nullptr)
     {
-        SetFighterStatsString(2, dynamic_cast<Fighter*>(m_player));
+        SetFighterStatsString(2, dynamic_cast<Fighter*>(m_currentDungeon->m_heroPtr));
         m_tabStringStatistics[3] = GetTitleLineString("Next: Space", TXT_BLUE);
         m_tabStringStatistics[m_tabStringStatistics.size() - 1] = GetTopLineString();
     }
@@ -103,7 +97,11 @@ void Message::SetMobStatsString()
 {
     int cpt = 1;
     int nbSize = 0;
-    for (Fighter* fighter : m_player->GetNearFightPlayer())
+    if (m_currentDungeon->m_heroPtr == nullptr)
+    {
+        return;
+    }
+    for (Fighter* fighter : m_currentDungeon->m_heroPtr->GetNearFightPlayer())
     {
         std::string attackTxt = "Attack: Enter";
         std::string nextTxt = "Next: Space";
