@@ -7,7 +7,7 @@ void Fighter::SendMessage(std::string message)
 {
 	if (OnFighterSendActionMessage)
 	{
-		OnFighterSendActionMessage(m_name + " " + std::to_string(GetId()) + " " + message);
+		OnFighterSendActionMessage(m_name + " " /*+ std::to_string(GetId()) + " "*/ + message);
 	}
 }
 
@@ -172,7 +172,7 @@ void Fighter::OnRedrawMovePossibilities()
 void Fighter::Attack(Fighter* target)
 {
 	target->TakeDamage(GetAttackDamage(), this);
-	SendMessage("Attaque");
+	SendMessage("attack " + target->GetName() + ", -" + std::to_string(GetAttackDamage()) + " PV !");
 }
 
 void Fighter::TakeDamage(int damage, Fighter* origin)
@@ -188,6 +188,7 @@ void Fighter::TakeDamage(int damage, Fighter* origin)
 
 void Fighter::Die()
 {
+	SendMessage(GetName() + " just died...");
 	if (OnDie)
 	{
 		OnDie();

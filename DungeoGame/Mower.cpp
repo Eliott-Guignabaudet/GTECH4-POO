@@ -15,6 +15,9 @@ Mower::Mower(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 {
 	//Attaque : Très puissante
 	m_name = "Mower";
+	std::string capacity = "All mob -" + std::to_string((GetAttackDamage() * GetPercentReward()) / 100) + " PV";
+	SetCapacityTxt(capacity);
+	SetPercentReward(50);
 }
 
 
@@ -39,7 +42,7 @@ void Mower::ExecuteCapacity()
 {
 	//Capacité spéciale : Se déplace vers le héros, cherchant à se rapprocher pour l'attaquer
 	Move();
-	SendMessage("Utilise sa capacité");
+	SendMessage("use its capacity !");
 
 }
 
@@ -47,6 +50,7 @@ void Mower::GetKillRewards()
 {
 	if (OnAttackAllFighter) 
 	{
+		SetAttackDamage((GetAttackDamage() * GetPercentReward()) / 100);
 		OnAttackAllFighter(this);
 	}
 }

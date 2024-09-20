@@ -4,6 +4,7 @@
 Golem::Golem() :
 	Mob::Mob(),
 	m_haveCancelDamage(false),
+	m_attackRewardUpgrade(0),
 	m_cancelDamageRate(25)
 {
 	m_name = "Golem";
@@ -16,6 +17,10 @@ Golem::Golem(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, int co
 {
 	//Attaque : Moyennement puissante
 	m_name = "Golem";
+	SetPercentReward(50);
+	m_attackRewardUpgrade = (GetAttackDamage() * GetPercentReward() / 100);
+	std::string capacity = "+" + std::to_string(m_attackRewardUpgrade) + " attack player";
+	SetCapacityTxt(capacity);
 }
 
 
@@ -48,7 +53,7 @@ void Golem::ExecuteCapacity()
 	if (randomValue <= m_cancelDamageRate)
 	{
 		m_haveCancelDamage = true; 
-		SendMessage("Utilise sa capacité");
+		SendMessage("use its capacity !");
 		return;
 	}
 	m_haveCancelDamage = false;
@@ -58,8 +63,7 @@ void Golem::ExecuteCapacity()
 
 void Golem::GetKillRewards()
 {
-	int attackDamageGolem = GetAttackDamage();
-	GetHeroTarget()->UpgradeAttack(attackDamageGolem);
+	GetHeroTarget()->UpgradeAttack(m_attackRewardUpgrade);
 }
 
 void Golem::TakeDamage(int damage, Fighter* fighter)

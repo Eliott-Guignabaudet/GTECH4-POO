@@ -12,6 +12,8 @@ Spectre::Spectre(Vector2 pos, int maxLife, int attackDamage, int sizeCanMove, in
 {
 	//Attaque : Faible
 	m_name = "Spectre";
+	std::string capacity = "Heal player";
+	SetCapacityTxt(capacity);
 }
 
 Vector2 Spectre::GetNewPosition(int sizeCanMove)
@@ -40,7 +42,7 @@ void Spectre::ExecuteCapacity()
 {
 	//Fuit dans la direction opposée pour éviter le héros
 	Move();
-	SendMessage("Utilise sa capacité");
+	SendMessage("use its capacity !");
 
 }
 

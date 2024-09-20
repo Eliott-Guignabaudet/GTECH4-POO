@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "IAController.h"
 
 class Dungeon;
@@ -70,6 +71,7 @@ private:
 	void HandleOnFinishIATurn();
 	void HandleOnIAControllerFinish();
 	void HandleOnRedrawFighter(Fighter* fighter);
+	void HandleOnFighterSendMessage(std::string message);
 
 #pragma endregion
 	void ResetDungeon();

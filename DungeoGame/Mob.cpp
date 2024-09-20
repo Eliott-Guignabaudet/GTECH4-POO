@@ -139,6 +139,26 @@ Vector2* Mob::GetNearPos()
 	return m_nearPoses;
 }
 
+void Mob::SetCapacityTxt(std::string txt)
+{
+	m_capacityTxt = txt;
+}
+
+std::string Mob::GetCapacityTxt()
+{
+	return m_capacityTxt;
+}
+
+void Mob::SetPercentReward(int percent)
+{
+	m_percentReward = percent;
+}
+
+int Mob::GetPercentReward()
+{
+	return m_percentReward;
+}
+
 void Mob::Die()
 {
 	Fighter::Die();

@@ -4,7 +4,9 @@
 #include "Time.h"
 #include "Dungeon.h"
 #include "DungeonParser.h"
+#include "Message.h"
 #include "Input.h"
+#include <iomanip>
 
 #include "PlayerController.h"
 #include "IAController.h"
@@ -133,9 +135,9 @@ void App::InitControllers()
 	{
 		m_playerController = new PlayerController();
 	}
-	m_playerController->PossessFighter(m_dungeon->m_heroEntity);
+	m_playerController->PossessFighter(m_dungeon->m_heroPtr);
 
-	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
+	std::vector<Fighter*> fighters = m_dungeon->m_fightersPtr;
 	for (int i = 0; i < fighters.size(); i++)
 	{
 		Fighter* currentFighter = fighters[i];
@@ -170,6 +172,9 @@ void App::RegisterForEvents()
 		std::bind(&App::HandleOnRedrawFighter, this, _1);
 	Fighter::OnRedrawMoveFighter = onRedrawFighterBind;
 
+	auto onFighterSendActionMessageBind =
+		std::bind(&App::HandleOnFighterSendMessage, this, _1);
+	Fighter::OnFighterSendActionMessage = onFighterSendActionMessageBind;
 
 	IATurnState* iaTurnState =
 		m_gameStateMachine->GetState<IATurnState>();
@@ -192,7 +197,7 @@ void App::Update()
 void App::UpdateAllFighterPossibilities()
 {
 	m_dungeon->RemoveFighters();
-	std::vector<Fighter*> fighters = m_dungeon->m_fighters;
+	std::vector<Fighter*> fighters = m_dungeon->m_fightersPtr;
 	for (int i = 0; i < fighters.size(); i++)
 	{
 		m_dungeon->UpdateMovePossibility(fighters[i]);
@@ -202,15 +207,17 @@ void App::UpdateAllFighterPossibilities()
 void App::Draw()
 {
 	system("cls");
-
 	State* state = m_gameStateMachine->GetCurrentState();
+	std::cout << std::setw(25) << std::right << std::setw(25) << " Turn : " + std::to_string(m_dungeon->m_currentTurn) << std::setw(25) << std::right;
 	if (dynamic_cast<PlayerTurnState*>(state))
 	{
-		std::cout << "Player Turn\n";
+		std::string playerTurnStateTxt = "Player Turn\n";
+		std::cout << TXT_BLUE + playerTurnStateTxt + TXT_RESET;
 	}
 	if (dynamic_cast<IATurnState*>(state))
 	{
-		std::cout << "IA Turn\n";
+		std::string iaTurnStateTxt = "IA Turn\n";
+		std::cout << TXT_RED + iaTurnStateTxt + TXT_RESET;
 	}
 
 	m_dungeon->Draw();
@@ -235,6 +242,7 @@ void App::RemoveIAController(IAController* iaController)
 		{
 			m_isGameFinish = true;
 		}
+		m_dungeon->m_currentTurn = 1;
 		m_dungeon->m_dungeonRoom++;
 		m_dungeon->SpawnMob();
 		InitControllers();
@@ -247,27 +255,31 @@ void App::RemoveIAController(IAController* iaController)
 
 void App::HandleOnPlayerFinishTurn()
 {
-	m_dungeon->m_heroEntity->isHisTurn = false;
+	m_dungeon->m_heroPtr->isHisTurn = false;
 	State* iaTurnState =
 		m_gameStateMachine->GetState<IATurnState>();
 	m_gameStateMachine->SwitchToState(iaTurnState);
 	UpdateAllFighterPossibilities();
 	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
+	Sleep(1000);
+	m_dungeon->m_message->ClearStockMessage();
 }
 
 void App::HandleOnFinishIATurn()
 {
+	m_dungeon->m_currentTurn++;
 	State* playerTurnState =
 		m_gameStateMachine->GetState<PlayerTurnState>();
 	m_gameStateMachine->SwitchToState(playerTurnState);
-	if (m_dungeon->m_heroEntity == nullptr || m_dungeon->m_heroEntity->m_isDead)
+	if (m_dungeon->m_heroPtr == nullptr || m_dungeon->m_heroPtr->m_isDead)
 	{
 		ResetDungeon();
 	}
 	UpdateAllFighterPossibilities();
 	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
+	m_dungeon->m_message->ClearStockMessage();
 }
 
 void App::HandleOnIAControllerFinish()
@@ -279,6 +291,11 @@ void App::HandleOnRedrawFighter(Fighter* fighter)
 {
 	m_dungeon->UpdateNearFighterPlayer();
 	Draw();
+}
+
+void App::HandleOnFighterSendMessage(std::string message)
+{
+	m_dungeon->m_message->AddMessage(message);
 }
 #pragma endregion
 

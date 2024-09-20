@@ -8,6 +8,7 @@ class Golem :
 private:
     bool m_haveCancelDamage;
     float m_cancelDamageRate;
+    int m_attackRewardUpgrade;
 public:
 
 #pragma region Class function

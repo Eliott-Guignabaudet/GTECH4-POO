@@ -15,6 +15,8 @@ private:
     int m_cooldown;
 
     Vector2 m_nearPoses[4];
+    std::string m_capacityTxt;
+    int m_percentReward;
 
 #pragma endregion
 
@@ -27,6 +29,12 @@ public:
 
     void SetNearPos(Vector2 pos);
     Vector2* GetNearPos();
+
+    void SetCapacityTxt(std::string txt);
+    std::string GetCapacityTxt();
+
+    void SetPercentReward(int percent);
+    int GetPercentReward();
 
 #pragma endregion
 
