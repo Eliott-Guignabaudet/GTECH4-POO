@@ -69,6 +69,7 @@ void Golem::ExecuteCapacity()
 
 void Golem::GetKillRewards()
 {
+	SendMessage("Attack player +" + std::to_string(m_attackRewardUpgrade));
 	GetHeroTarget()->UpgradeAttack(m_attackRewardUpgrade);
 }
 

@@ -5,6 +5,7 @@
 Mob::Mob() :
 	Fighter::Fighter(),
 	m_targetPlayer(nullptr),
+	m_percentReward(0),
 	m_cooldown(0)
 {
 	m_name = "Mob";
@@ -14,6 +15,7 @@ Mob::Mob() :
 Mob::Mob(Vector2 pos, char sprite, int maxLife, int attackDamage, int sizeCanMove, int cooldown, Hero* target) :
 	Fighter::Fighter(pos, sprite, maxLife, attackDamage, sizeCanMove),
 	m_targetPlayer(target),
+	m_percentReward(0),
 	m_cooldown(cooldown)
 {
 	m_name = "Mob";

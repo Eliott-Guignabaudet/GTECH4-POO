@@ -48,5 +48,6 @@ void Spectre::ExecuteCapacity()
 
 void Spectre::GetKillRewards()
 {
+	SendMessage("Heal player" + std::to_string(GetHeroTarget()->GetMaxLife() - GetHeroTarget()->GetLife()));
 	GetHeroTarget()->HealPlayer();
 }

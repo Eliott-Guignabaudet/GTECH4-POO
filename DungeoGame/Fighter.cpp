@@ -171,8 +171,8 @@ void Fighter::OnRedrawMovePossibilities()
 
 void Fighter::Attack(Fighter* target)
 {
-	target->TakeDamage(GetAttackDamage(), this);
 	SendMessage("attack " + target->GetName() + ", -" + std::to_string(GetAttackDamage()) + " PV !");
+	target->TakeDamage(GetAttackDamage(), this);
 }
 
 void Fighter::TakeDamage(int damage, Fighter* origin)
