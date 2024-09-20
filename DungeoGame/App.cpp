@@ -39,9 +39,11 @@
 
 #pragma endregion
 
-
+#if _DEBUG
+const int MAX_ROOM = 1;
+#else
 const int MAX_ROOM = 10;
-
+#endif
 using namespace std::placeholders;
 
 #pragma region Singleton
